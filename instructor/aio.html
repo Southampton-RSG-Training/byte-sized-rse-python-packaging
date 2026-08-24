@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>Lesson Title: All in One View</title>
+<title>Byte-Sized RSE: Packaging Python: All in One View</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../assets/themetoggle.js"></script><link rel="stylesheet" type="text/css" href="../assets/styles.css">
 <script src="../assets/scripts.js" type="text/javascript"></script><!-- mathjax --><!-- NOTE: https://docs.mathjax.org/en/latest/output/mathml.html#mathml-support --><!-- Changes from V2 to V4: https://mathjax.github.io/MathJax-demos-web/convert-configuration/convert-configuration.html
@@ -99,7 +99,7 @@
       <img class="small-logo" alt="Lesson Description" src="../assets/images/incubator-logo-sm.svg">
 </div>
     <div class="lesson-title-md">
-      Lesson Title
+      Byte-Sized RSE: Packaging Python
     </div>
     <div class="search-icon-sm">
       <!-- TODO: do not show until we have search
@@ -110,7 +110,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 <li class="nav-item">
           <span class="lesson-title">
-            Lesson Title
+            Byte-Sized RSE: Packaging Python
           </span>
         </li>
         <li class="nav-item">
@@ -237,7 +237,19 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. Using Markdown</a>
+        <a href="10-introduction.html">1. Introduction</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush3">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading3">
+        <a href="11-writing-pyproject-toml.html">2. Introduction</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -301,12 +313,12 @@
     <main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>All in One View</h1>
         
-<section id="aio-introduction"><p>Content from <a href="introduction.html">Using Markdown</a></p>
+<section id="aio-10-introduction"><p>Content from <a href="10-introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2025-07-11 |
+<p>Last updated on 2026-08-24 |
 
-        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
+        <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/edit/main/episodes/10-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 15 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
@@ -318,8 +330,9 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do you write a lesson using Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<li>What is a <code>pyproject.toml</code> file?</li>
+<li>What information do I need to include in the file for my
+project?</li>
 </ul>
 </div>
 </div>
@@ -329,158 +342,1225 @@
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Explain how to use markdown with The Carpentries Workbench</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<li>Be able to create a <code>pyproject.toml</code> file for a small
+project.</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<div class="section level1">
+<h1 id="packaging-python-code">Packaging Python Code<a class="anchor" aria-label="anchor" href="#packaging-python-code"></a>
+</h1>
+<p>Packaging and distribution of code is an issue no matter what
+language you write software in. In this course we’re going to look
+specifically at Python, and how to package it in various ways that may
+be useful for research codebases. However, most of the ideas discussed
+in this course carry over to other languages, particularly high-level
+languages like R and Javascript.</p>
+<div class="section level2">
+<h2 id="the-problem-of-packaging">The Problem of Packaging<a class="anchor" aria-label="anchor" href="#the-problem-of-packaging"></a>
 </h2>
-<hr class="half-width">
-<p>This is a lesson created via The Carpentries Workbench. It is written
-in <a href="https://pandoc.org/MANUAL.html" class="external-link">Pandoc-flavored Markdown</a>
-for static files and <a href="https://rmarkdown.rstudio.com/" class="external-link">R
-Markdown</a> for dynamic files that can render code into output. Please
-refer to the <a href="https://carpentries.github.io/sandpaper-docs/" class="external-link">Introduction to The
-Carpentries Workbench</a> for full documentation.</p>
-<p>What you need to know is that there are three sections required for a
-valid Carpentries lesson:</p>
-<ol style="list-style-type: decimal">
+<p>Once you get beyond the most basic of programs you are going to start
+depending on other code to do things. At the most fundamental level it
+may be calling out to system functions, or to standard libraries of the
+language you are working with, but in the real world there are likely to
+be many packages and libraries of code that you end up using to a
+greater and lesser degree.</p>
+<p>This may be acceptable when you are the only consumer of your code,
+working on systems where you control the environment completely, but as
+soon as you start wanting to share your code with others, you have the
+problem of ensuring that the environment that your program depends on is
+available.</p>
+<p>There are two basic of ways of solving this problem:</p>
+<ul>
 <li>
-<code>questions</code> are displayed at the beginning of the episode
-to prime the learner for the content.</li>
+<p>include everything with your code (possibly up to and including
+the hardware it runs on!). This is particularly applicable for
+<em>applications</em> which may rely on operating system functionality
+and nothing else.</p>
+<p>Examples of this approach include Docker/Containers, Linux Flatpak,
+C/C++ static builds, MSI installers on Windows, and tools like
+PyInstaller or Briefcase in the Python world.</p>
+</li>
 <li>
-<code>objectives</code> are the learning objectives for an episode
-displayed with the questions.</li>
-<li>
-<code>keypoints</code> are displayed at the end of the episode to
-reinforce the objectives.</li>
-</ol>
-<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
-</button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
-<div class="accordion-body">
-<p>Inline instructor notes can help inform instructors of timing
-challenges associated with the lessons. They appear in the “Instructor
-View”</p>
-</div>
-</div>
-</div>
-</div>
-<div id="challenge-1-can-you-do-it" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="challenge-1-can-you-do-it" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Can you do it?</h3>
-<div class="callout-content">
-<p>What is the output of this command?</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">paste</span><span class="op">(</span><span class="st">"This"</span>, <span class="st">"new"</span>, <span class="st">"lesson"</span>, <span class="st">"looks"</span>, <span class="st">"good"</span><span class="op">)</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Output </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[1] "This new lesson looks good"</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout-inner">
-<h3 class="callout-title">Challenge 2: how do you nest solutions within
-challenge blocks?</h3>
-<div class="callout-content">
-
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
-<div class="accordion-body">
-<p>You can add a line with at least three colons and a
-<code>solution</code> tag.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
-</h2>
-<hr class="half-width">
-<p>You can use standard markdown for static figures with the following
-syntax:</p>
-<p><code>![optional caption that appears below the figure](figure url){alt='alt text for accessibility purposes'}</code></p>
-<figure><img src="https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg" alt="Blue Carpentries hex person logo with no text." class="figure mx-auto d-block"><div class="figcaption">You belong in The Carpentries!</div>
-</figure><div id="callout1" class="callout">
+<p>include information about the dependencies alongside the code and
+rely on installation technologies to understand these dependencies and
+install them. This is common for code <em>libraries</em> that are
+themselves used by other code.</p>
+<p>Examples of this approach includes Linux packaging technologies like
+APT or YUM, systems like Homebrew on Mac and Nuget on Windows, and the
+dependency resolution system used by pip/PyPI for Python or NPM for
+Javascript.</p>
+</li>
+</ul>
+<p>In both cases you need to be able to <em>specify</em> those
+dependencies, either because your build system needs to know what to
+include in the build, or because your installer needs to know what to
+add to the system.</p>
+<div id="the-history-of-packaging-on-python" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div class="callout-inner">
+<div id="the-history-of-packaging-on-python" class="callout-inner">
+<h3 class="callout-title">The History of Packaging on Python</h3>
 <div class="callout-content">
-<p>Callout sections can highlight information.</p>
-<p>They are sometimes used to emphasise particularly important points
-but are also used in some lessons to present “asides”: content that is
-not central to the narrative of the lesson, e.g. by providing the answer
-to a commonly-asked question.</p>
+<p>Originally Python had no packaging system: you simply downloaded and
+copied Python files into somewhere that Python would find them (usually
+via the <code>PYTHONPATH</code> environment variable). Eventually there
+was a website called “The Vaults of Parnassus” where archives of Python
+libraries were stored and where you could download the source (this was
+well before GitHub existed). This worked OK for pure Python code, but
+for Python extensions written in C/C++ there was typically a compilation
+step which used typical Unix tooling—like configure scripts and Make—and
+which didn’t work on other platforms.</p>
+<p>As a result, around 2000, Python introduced the
+<code>distutils</code> library that gave a cross-platform way of
+building Python packages and extensions, and introduced the
+<code>setup.py</code> script. While this worked well for pure Python
+packages, C/C++ extensions required you to have a C/C++ compiler
+available (generally not a problem on Unix, but potentially expensive on
+Mac and Windows), and even then often it needed to be exactly the right
+compiler. Packages like SciPy were notoriously difficult to build as you
+needed both C and Fortran compilers.</p>
+<p>So shortly after the introduction of distutils, tooling was developed
+for binary packaging: <code>easy_install</code>, <code>setuptools</code>
+and the <code>.egg</code> format (as in what snakes hatch from); and
+companies like ActiveState, Enthought and (eventually)
+Continuum/Anaconda started to build businesses around packaging.</p>
+<p>The <code>setup.py</code> and <code>.egg</code> systems worked OK,
+but had the problem that they relied on <em>scripts</em>: a
+<code>setup.py</code> file could contain arbitrary code, and eggs could
+specify scripts to run as part of installation. Great for flexibility,
+but poor for discoverability.</p>
+<p>The next major development was the creation of the “cheese shop”, now
+better known as the Python Package Index (or PyPI) as a standard
+repository of Python packages and evetually, after a <em>lot</em> of
+politics, the creation of the “wheel” format (as in a “wheel” of
+cheese), <code>pip</code>, and <code>pyproject.toml</code> to replace
+eggs, <code>easy_install</code> and <code>setup.py</code> respectively.
+The primary advantage of wheels and <code>pyproject.toml</code> is that
+they are <em>not</em> scripts, and so can be reliably analysed and
+installers do not need to run arbitrary code that can literally do
+<em>anything</em> to your computer.</p>
+<p>The point of this discussion is that you may still find the remains
+of this history when you look into old research codebases: now you know
+what <code>easy_install</code>, <code>setup.py</code> and “egg” files
+are if you encounter references to them.</p>
+<p>And also that packaging is <strong>hard</strong> to do, and even
+harder to get right. It’s taken Python over 30 years.</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="math">Math<a class="anchor" aria-label="anchor" href="#math"></a>
+</div>
+<div class="section level2">
+<h2 id="packaging-python-scripts">Packaging Python Scripts<a class="anchor" aria-label="anchor" href="#packaging-python-scripts"></a>
 </h2>
-<hr class="half-width">
-<p>One of our episodes contains <span class="math inline">\(\LaTeX\)</span> equations when describing how to
-create dynamic reports with {knitr}, so we now use mathjax to describe
-this:</p>
-<p><code>$\alpha = \dfrac{1}{(1 - \beta)^2}$</code> becomes: <span class="math inline">\(\alpha = \dfrac{1}{(1 - \beta)^2}\)</span></p>
-<p>Cool, right?</p>
-<div id="keypoints1" class="callout keypoints">
-<div class="callout-square">
-<i class="callout-icon" data-feather="key"></i>
+<p>A common problem for research software is that you have a Python
+script that performs some analysis that you want to share. A new way to
+do this is via <a href="https://packaging.python.org/en/latest/specifications/inline-script-metadata" class="external-link">“Inline
+Script Metadata”</a>.</p>
+<p>If you add a specially formatted comment like the following:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co"># /// script</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="co"># requires-python = "&gt;=3.11"</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="co"># dependencies = [</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="co">#   "pytorch&gt;2.11",</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">#   "pillow",</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="co"># ]</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="co"># ///</span></span></code></pre>
 </div>
-<span class="callout-header">Key Points</span>
-<div class="callout-inner">
+<p>then tools like <code>pip</code> can use this information to install
+the dependencies into a virtual environment using the <a href="https://pip.pypa.io/en/latest/cli/pip_install/#cmdoption-requirements-from-script" class="external-link"><code>--requirements-from-script</code></a>
+command-line option.</p>
+<p>This is great for <em>replication</em>: research scripts can specify
+under what conditions they expect to run, and then other tooling can
+ensure that there is an appropriate environment for the script to run as
+designed. If needed, precise versions can be specified.</p>
+<div id="what-packages-are-dependencies" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="what-packages-are-dependencies" class="callout-inner">
+<h3 class="callout-title">What Packages are ‘Dependencies’?</h3>
 <div class="callout-content">
+<p>The packages that you rely on in your code also likely have
+dependencies of their own. And in turn <em>those</em> dependencies may
+have further dependencies. So an immediate question is what packages
+<em>should</em> you specify as dependencies of your script?</p>
+<p>A good rule of thumb is that if you directly import code from a
+package, then it should be a dependency. In some cases this isn’t
+strictly necessary because of chained dependencies: for example, if you
+depend on <code>torchvision</code>, then <code>torchvision</code>
+depends on <code>torch</code> and so you will automatically get
+<code>torch</code> installed and don’t need to specify it as a separate
+dependency.</p>
+<p>However it’s good practice to specify <code>torch</code> as a
+dependency as well if you directly import it as a form of defensive
+programming: if at a later point you remove the use of
+<code>torchvision</code> but keep the usage of <code>torch</code> you’re
+less likely to have problems with your dependencies.</p>
+<p>The exception to this is when publishing code in support of
+research—when you care about the ability to replicate—you may want to
+specify your dependencies exactly and completely. You can get a list of
+all currently installed packages in an environment with
+<code>pip freeze</code>. The result of this should allow others to
+reproduce your Python environment, assuming the same Python version and
+OS.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="specifying-dependencies">Specifying Dependencies<a class="anchor" aria-label="anchor" href="#specifying-dependencies"></a>
+</h2>
+<p>The simplest way to specify a dependency is just by its name:
+<code>"numpy"</code> or <code>"pytorch"</code>. This name is the name of
+the <em>distribution</em> and not the name of the <em>package</em> it
+installs (for example, <code>pytorch</code> installs the
+<code>torch</code> package). This is because a single distribution can
+install multiple packages. To find the correct distribution name, search
+on the <a href="../pypi.org">Python Package Index</a>.</p>
+<p>Installers, like <code>pip</code> or <code>uv</code> will use this
+information to find a compatible set of dependency versions and install
+them. While this is very flexible, it runs the risk of installing an
+older or newer version of your dependency that isn’t compatible with
+your code. To get around this, you can add additional data that
+indicates which versions of your dependencies your code is compatible
+with.</p>
+<p>You can use standard comparison operators (<code>&lt;=</code>,
+<code>&gt;=</code>, <code>==</code>, <code>!=</code> and so on) to
+specify ranges of versions of your dependencies, speparated by commas,
+so <code>pytorch &gt;= 2.10,&lt;2.15,!=2.11.4</code> means any version
+of pytorch from 2.10.0 up to, but not including 2.15.0, but also
+excluding the exact version 2.11.4. You can also use wildcards in your
+expression, such as <code>pytorch==2.12.*</code> which means any version
+of PyTorch 2.12. The operator <code>~=</code> means any version
+compatible with the specified version, so for example
+<code>pytorch ~= 2.11</code> means any version from 2.11.0 up to, but
+not including, 3.0 (if/when it comes out).</p>
+<p>Sometimes you may need to specify a dependency which is only needed
+for a particular platform or python version. In this case you can follow
+the version information with additional filters after a semicolon such
+as <code>typing-extensions&gt;=4.13; python_version &lt; 3.14</code> -
+this will install <code>typing-extensions</code> only if your package is
+installed on Python 3.13 or earlier. You can use
+<code>sys_platform</code> to detect windows vs. linux vs. mmacOS, and
+there are similar identifiers to detect things like machine
+architectures (eg. ARM vs. Intel). The full set of options can be found
+in the <a href="https://packaging.python.org/en/latest/specifications/dependency-specifiers/#defined-environment-marker-fields" class="external-link">Python
+Packaging User Guide</a></p>
+<p>Finally, if absolutely necessary, you can specify a URL which
+contains the distribution that you want to install. This can be a link
+to a binary wheel, a zip file with the code, or even to a git
+repository. This allows you to do things like depending on non-open code
+in a private repository that you have access to.</p>
+<div id="dependencies-on-the-command-line" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="dependencies-on-the-command-line" class="callout-inner">
+<h3 class="callout-title">Dependencies on the Command-line</h3>
+<div class="callout-content">
+<p>You can use comparison operators when installing packages from the
+command-line using tools like <code>pip</code> or <code>uv</code>, but
+you need to take care because <code>&gt;</code> and <code>&lt;</code>
+have special meanings to console and other similar command shells. If
+you need to specify version ranges on the command line, it’s generally a
+good idea to put quotes around them, eg.:</p>
+<pre class="console"><code>pip install "pytorch &gt;= 2.11"</code></pre>
+</div>
+</div>
+</div>
+<div id="supply-chain-attacks" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="supply-chain-attacks" class="callout-inner">
+<h3 class="callout-title">Supply-Chain Attacks</h3>
+<div class="callout-content">
+<p>When you are using other people’s code, you are implicitly
+<em>trusting</em> other people’s code. This trust is something which can
+be exploited by hackers. There are two main ways that this trust can be
+exploited:</p>
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li><p><strong>“typo-squatting”</strong> - it’s easy to make mistakes
+when typing in the names of distributions, particularly when the name of
+the distribution doesn’t match the name of the package (eg. is it
+<code>torch</code> or <code>pytorch</code>? Is it
+<code>scikit-learn</code> or <code>scikit_learn</code> or
+<code>sklearn</code>?). Bad actors can create malicious libraries which
+have names close to or easily mistaken for popular packages which can
+then run arbitrary code on your system with your privileges. Most
+package repositories monitor for bad packages like this, but you should
+always take care that your dependencies are what you think they
+are.</p></li>
+<li><p><strong>supply-chain compromises</strong> - if attackers can gain
+the credentials to write to a popular package they can potentially
+inject malicious code into the package which then is run by users of
+that package. This can either be via compromising developer accounts, or
+using social engineering to gain the trust of the core developers of a
+package and then gaining commit rights to the project. In at least one
+prominent case, a state-level actor took control of an open-source
+project.</p></li>
 </ul>
+<p>The main defence against these sorts of attack is vigilance: take
+care with dependencies, and make sure that you keep some visibility on
+the state of those projects (eg. subscribing to announcements, or
+reading news sources which report on these sorts of issues). If well-run
+projects are compromised, they are usually up-front about the
+problem.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="packaging-python-libraries">Packaging Python Libraries<a class="anchor" aria-label="anchor" href="#packaging-python-libraries"></a>
+</h2>
+<p>The current standard for specifying dependencies and build
+information in Python is the <code>pyproject.toml</code> file. There are
+other, older ways of doing this that you may still see, such as a
+<code>requirements.txt</code> file, but for new code it is best to use
+<code>pyproject.toml</code>.</p>
+<p>However for packaging you need to specify more than dependencies in
+most cases. Particularly if you are going to share your code on GitHub
+or PyPI, you will need to specify the name of your package, the version,
+the authors, contact information, descriptions of what the package does,
+where to find the original source code repositories, and so on.</p>
+<p>A minimal <code>pyproject.toml</code> might look something like
+this:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"hatchling"</span><span class="op">]</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"hatchling.build"</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="kw">[project]</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"example-project"</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>    <span class="st">"torchvision"</span><span class="op">,</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a><span class="op">]</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1" aria-label="code-block-3-14"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1" aria-label="code-block-3-15"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1" aria-label="code-block-3-16"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"A person"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"A.Person@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1" aria-label="code-block-3-17"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Another person"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"A.N.Other@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1" aria-label="code-block-3-18"></a><span class="op">]</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1" aria-label="code-block-3-19"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1" aria-label="code-block-3-20"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"A person"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"A.Person@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1" aria-label="code-block-3-21"></a><span class="op">]</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1" aria-label="code-block-3-22"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project."</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1" aria-label="code-block-3-23"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1" aria-label="code-block-3-24"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1" aria-label="code-block-3-25"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E.*"</span><span class="op">]</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1" aria-label="code-block-3-26"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"coffee"</span><span class="op">]</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1" aria-label="code-block-3-27"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1" aria-label="code-block-3-28"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1" aria-label="code-block-3-29"></a>  <span class="st">"Programming Language :: Python"</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1" aria-label="code-block-3-30"></a><span class="op">]</span></span></code></pre>
+</div>
+<p>Not all of these are strictly needed for packaging, but are a good
+idea.</p>
+<p>There are additional optional sections that you can include, such as
+specifying optional dependencies (eg. for a GUI or for development
+work), command-line scripts and configuration options for tools such as
+linters.</p>
+<div id="toml" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="toml" class="callout-inner">
+<h3 class="callout-title">TOML</h3>
+<div class="callout-content">
+<p>TOML, or “Tom’s Markup Language”, is a human-readable data format
+along the lines of XML, JSON, YAML and similar, but designed to be
+somewhat easier for humans to <em>write</em>. It is somewhat inspired by
+the <code>.ini</code> configuration file format used in older Windows
+apps, but less complex and a more modern.</p>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="build-system-options">Build-system Options<a class="anchor" aria-label="anchor" href="#build-system-options"></a>
+</h3>
+<p>The <code>build-system</code> section tells Python tooling how to
+build the package, both for installation from source and for producing
+wheels for distribution.</p>
+<p>See <a href="https://www.pyopensci.org/python-package-guide/package-structure-code/python-package-build-tools.html" class="external-link">PyOpenSci’s
+discussion for how you might go about choosing a build system</a>.
+Unless you are doing something complex (such as wrapping a large C/C++
+library), the following are good choices:</p>
+<ul>
+<li>
+<strong>SetupTools</strong>: legacy, but battle-tested and it
+generally just works.</li>
+<li>
+<strong>Hatch/Hatchling</strong>: Hatch is a comprehensive solution.
+It can set up a project for you, create environments, and run tests.
+However it is opinionated about the tooling it uses to do this (eg. it
+is some work if you don’t want to use <code>pytest</code> or
+<code>uv</code>). Hatchling is Hatch’s build backend, but it can be used
+independently.</li>
+</ul>
+<p>A typical build-system section might look like this:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"hatchling"</span><span class="op">]</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"hatchling.build"</span></span></code></pre>
+</div>
+<p>If you depend on other packages when you are <em>building</em> your
+code (eg. Cython), those should be added to the <code>requires</code>
+section and follow the same rules for specifying dependencies as
+described above.</p>
+</div>
+<div class="section level3">
+<h3 id="dependencies-and-optional-dependencies">Dependencies and Optional Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-and-optional-dependencies"></a>
+</h3>
+<p>The <code>[project]</code> section of the <code>pyproject.toml</code>
+contains the project’s metadata. A lot of this is information to help
+PyPI get information about the package to help with searching anc
+categorising. But some of the data is used by tools like
+<code>pip</code>. In particular, you need a <code>name</code> and
+<code>version</code> field to be able to install your package with
+<code>pip</code> or <code>uv</code>. Depending on what language and
+standard library features you use, you may want to specify the Python
+version that your code requires.</p>
+<p>But most importantly, it includes the <code>dependencies</code>,
+which is a list of your project runtime dependencies. These dependencies
+are dpecified in the same format that was discussed earlier. In general,
+for library code, it is better to specify just the few top-level
+dependencies. At a minimum this should be every 3rd party library that
+you directly import. You can generally assume that your dependencies
+will specify what they need through their own
+<code>pyproject.toml</code> but you may need to specify a few more
+projects depending on the circumstances: some Python code may test to
+see whether a package is installed before trying to use it rather than
+having a direct dependency on it.</p>
+<p>There is a mechanism for distributions to specify these sorts of
+“optional dependencies” or “extras”. These allow you to give a name to
+additional sets of dependencies. Common use-cases include specifying
+extra dependencies that are needed for developers on the project (eg.
+tools for linting, compilation, testing, and documenatation), optional
+additonal features (such as a command-line or GUI front-end), or support
+for particular less-common use cases (such as reading from certain file
+formats, or support for particular databases).</p>
+<p>These are specified as their own
+<code>[project.optional-dependencies]</code> section which includes a
+mapping of extra names to the corresponding dependencies:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="kw">[project.optional-dependencies]</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  <span class="st">"pytest"</span><span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>  <span class="st">"black"</span><span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>  <span class="st">"pylint"</span><span class="op">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a><span class="op">]</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"pyside6"</span><span class="op">]</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span><span class="st">"click"</span><span class="op">]</span></span></code></pre>
+</div>
+<p>The dependency names are up to you (there is nothing special about
+<code>dev</code>, <code>gui</code> or <code>cli</code> in the above
+example), and the dependencies themselves follow the same rules as other
+dependencies discussed earlier.</p>
+<p>To install a distribution and one or more of its extras, you add the
+extras you want in square brackets after the name of the package. For
+example to be able to read and write Excel spreadsheets from the Pandas
+library, you need to include the <code>excel</code> extra, and for
+reading and writing HTML pages you need the <code>html</code> extra. At
+the command-line installing both would look like:</p>
+<pre class="console"><code>pip install "pandas[excel,html]"</code></pre>
+<p>The quotes are needed as console and other shells consider square
+brackets to have special meaning.</p>
+<p>To specify in a <code>pyproject.toml</code> it would be similar:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>  <span class="st">"pandas[excel,html]"</span><span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="op">]</span></span></code></pre>
+</div>
+<div id="dependency-groups" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="dependency-groups" class="callout-inner">
+<h3 class="callout-title">Dependency Groups</h3>
+<div class="callout-content">
+<p>A recent way of specifying additional dependencies are “dependency
+groups”, which are specified similarly to extras, but using the
+top-level <code>[dependency-groups]</code> section, and which have
+slightly different behaviour:</p>
+<ul>
+<li>they don’t require the package itself to be installed (which saves
+time for installing build tools, linters or similar tools that operate
+<em>on</em> the code);</li>
+<li>dependency groups can include other dependency groups; and</li>
+<li>they are installed via tools like <code>pip</code> with the
+<code>--group</code> argument.</li>
+</ul>
+<p>This can be convenient for projects which aren’t libraries or single
+scripts, such as projects with Jupyter notebooks, as a way to specify
+dependencies without having to install a library.</p>
+<p>For example, to install requirements for a jupyter notebook which
+uses pandas, you might have the following in your
+<code>pyproject.toml</code>:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">[dependency-groups]</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="dt">notebooks</span> <span class="op">=</span> <span class="op">[</span><span class="st">"notebook"</span><span class="op">,</span> <span class="st">"pandas"</span><span class="op">]</span></span></code></pre>
+</div>
+<p>and then you could install the dependencies into your virtual
+environment with:</p>
+<pre class="console"><code>pip install --group notebooks</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="installing-for-development">Installing for Development<a class="anchor" aria-label="anchor" href="#installing-for-development"></a>
+</h3>
+<p>Once you have a <code>pyproject.toml</code> you can install your
+project in “editable” form into your working virtual environment using
+<code>pip</code> or similar tools. At the command-line, change directory
+into the top-level of your project where your
+<code>pyproject.toml</code> is, and run:</p>
+<pre class="console"><code>pip install -e .</code></pre>
+<p>This installs your library and its dependencies into your current
+virtual environment, but in a way so that if you edit your library then
+the changes are picked up when you restart Python and import your
+package.</p>
+<p>If you change your dependencies you will need to re-run the command
+to pick them up.</p>
+</div>
+<div class="section level3">
+<h3 id="data-files">Data files<a class="anchor" aria-label="anchor" href="#data-files"></a>
+</h3>
+<p>Often you need to distribute more than just Python code. Maybe it’s
+the wieights for a deep learning model, maybe its a small database,
+maybe its images, HTML templates and Javascript for a web app. Whatever
+it is, you need to tell your build system to include those files when it
+builds the distribution.</p>
+<p>There isn’t a standard way to do this: different build backends have
+different ways to specify additional files that should be included in
+the built distribution.</p>
+<div class="section level4">
+<h4 id="setuptools">Setuptools<a class="anchor" aria-label="anchor" href="#setuptools"></a>
+</h4>
+<p>Setuptools accepts a number of different ways of specifying
+additional files.</p>
+<p>The easiest way is to use a
+<code>[tool.setuptools.package-data]</code> section to give patterns for
+files to include:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="kw">[tool.setuptools.package-data]</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a><span class="dt">"*"</span> <span class="op">=</span> <span class="op">[</span><span class="st">"*.txt"</span><span class="op">,</span> <span class="st">"*.safetensors"</span><span class="op">]</span></span></code></pre>
+</div>
+<p>will add all text files and safetensor weights in any package to your
+distribution. There are also options to specify files to exclude, and
+the directories to search for files in.</p>
+</div>
+<div class="section level4">
+<h4 id="hatchling">Hatchling<a class="anchor" aria-label="anchor" href="#hatchling"></a>
+</h4>
+<p>Hatchling understands <code>.gitignore</code> files, and so by
+default it includes all files in your packages that are under version
+control, which is often good enough. You can turn this off, and you can
+also add or remove files from inclusion, but this is done separately for
+source distributions and wheels.</p>
+<p>Exact details can be found in the <a href="https://hatch.pypa.io/latest/config/build/#file-selection" class="external-link">Hatch
+documentation</a>.</p>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="building-distributions">Building Distributions<a class="anchor" aria-label="anchor" href="#building-distributions"></a>
+</h2>
+<p>Python has two common ways of distributing packages: source
+distributions and binary wheels. For pure Python packages there isn’t a
+lot of difference between the two formats, but binary wheels are
+required if you want to distribute extension modules without requiring
+that that user has a compiler on their system.</p>
+<p>It’s a good idea to build your library regularly as part of
+continuous integration to make sure that nothing is broken.</p>
+<p>The standard Python tool for building both wheels and source
+distributions is <code>build</code>. You can install it into your
+environment using <code>pip</code>:</p>
+<pre class="console"><code>pip install build</code></pre>
+<p>and then you can use the <code>build</code> command to build wheels,
+source distributions, or both:</p>
+<pre class="console"><code>python -m build</code></pre>
+<p>The build artifacts produced will be located in the <code>dist</code>
+directory by default.</p>
+<div class="section level3">
+<h3 id="building-on-other-platforms">Building on Other Platforms<a class="anchor" aria-label="anchor" href="#building-on-other-platforms"></a>
+</h3>
+<p>The <code>build</code> tool has the limitation that it can only build
+either pure Python wheels or wheels for the current platform and Python
+version. If you need to build wheels which include extension modules
+then the <a href="https://cibuildwheel.pypa.io/en/stable/" class="external-link"><code>cibuildwheel</code></a>
+project provides a CI tool (available for GitHub and GitLab in
+particular) which will automatically set up virtual machines and run
+<code>build</code> on a wide variety of platforms. Take care when doing
+this with private repositories: the build process is time-consuming and
+may eat your free CI time, particularly if you enable some of the more
+exotic platforms.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="publishing-distributions-to-pypi">Publishing Distributions to PyPI<a class="anchor" aria-label="anchor" href="#publishing-distributions-to-pypi"></a>
+</h2>
+<p>When you are ready to release your code, after you have built it, you
+can use the Twine tool to publish your code to your project on PyPI. You
+don’t have to use Twine: you <em>can</em> manually upload files, but
+Twine significantly improves the experience.</p>
+<p>Before using Twine, you will need to create an account on PyPI, and
+then reserve your distribution</p>
+<p>To use Twine, you install it with pip:</p>
+<pre class="console"><code>pip install twine</code></pre>
+<p>You can then check that your distribution metadata renders correctly
+using <code>twine check</code></p>
+<pre class="console"><code>twine check</code></pre>
+<p>PyPI provides a “Test PyPI” instance that you can use to verify that
+everything looks correct:</p>
+<pre class="console"><code>twine upload -r testpypi dist/*</code></pre>
+<p>When you are happy that everything is OK, you can then upload
+with:</p>
+<pre class="console"><code>twine upload dist/*</code></pre>
+</div>
+<div class="section level2">
+<h2 id="packaging-applications">Packaging Applications<a class="anchor" aria-label="anchor" href="#packaging-applications"></a>
+</h2>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
+</div></section><section id="aio-11-writing-pyproject-toml"><p>Content from <a href="11-writing-pyproject-toml.html">Introduction</a></p>
+<hr>
+<p>Last updated on 2026-08-24 |
+
+        <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/edit/main/episodes/11-writing-pyproject-toml.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 15 minutes</p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What is a <code>pyproject.toml</code> file?</li>
+<li>What information do I need to include in the file for my
+project?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Be able to create a <code>pyproject.toml</code> file for a small
+project.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level1">
+<h1 id="activity-preparing-a-project-for-distribution">Activity: Preparing a Project for Distribution<a class="anchor" aria-label="anchor" href="#activity-preparing-a-project-for-distribution"></a>
+</h1>
+<div class="section level2">
+<h2 id="example-code">Example Code<a class="anchor" aria-label="anchor" href="#example-code"></a>
+</h2>
+<p>The example code can be found at: <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging-example" class="external-link uri">https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging-example</a></p>
+<p>This is a small project which wraps the Torchvision image classifiers
+and provides:</p>
+<ul>
+<li>an easy to use library that lets you experiment with inference using
+these models,</li>
+<li>a command-line tool that lets you perform inference on image
+files,</li>
+<li>a GUI app that lets you perform inference on image files (and on
+some platforms, images from a web cam).</li>
+</ul>
+<p>To get started:</p>
+<ul>
+<li>create a copy from the template by selecting “Use this template
+-&gt; Create a new repository”</li>
+<li>clone the repository to your local machine and go into the project
+directory</li>
+</ul>
+<pre class="console"><code>cd
+git clone git@github.com:[your-github-id]/byte-sized-rse-python-packaging-example.git
+cd byte-sized-rse-python-packaging-example</code></pre>
+<p>To use the code, you can create a virtual environment an install all
+the dependencies:</p>
+<pre class="console"><code>python3 -m venv venv
+source venv/bin/activate
+pip install click numpy pillow rich rich-pixels toga torch "torchvision &gt;= 0.13" tqdm</code></pre>
+<p>You should then be able to run the tests:</p>
+<pre class="console"><code>python -m unittest discover tests</code></pre>
+<p>The command-line tool:</p>
+<pre class="console"><code>python -m image_classifiers.cli tests/data/*.jpg</code></pre>
+<p>And the GUI:</p>
+<pre class="console"><code>python -m image_classifiers.gui</code></pre>
+<p>If you open an image file in the GUI, you should see the labels and
+probability of each label.</p>
+</div>
+<div class="section level2">
+<h2 id="adding-a-pyproject-toml">Adding a <code>pyproject.toml</code>
+<a class="anchor" aria-label="anchor" href="#adding-a-pyproject-toml"></a>
+</h2>
+<p>The first step in packaging your project is to create a
+<code>pyproject.toml</code> file. In your editor of choice, at the top
+level of the repository, create a new file called
+<code>pyproject.toml</code>. In the file, add the following, changing
+the name of the project appropriately:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="kw">[project]</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span></code></pre>
+</div>
+<p>This is the absolute minimum that you need. With just this you can
+build and install your project with <code>pip</code>, but usually you
+will want to specify the build system as well. We are going to use
+<code>setuptools</code> in this example. We have some data files that
+are needed in the distributions (mainly image files used in the UI and
+tests) and we want to also use <code>setuptools-scm</code> to make sure
+that all files under version control are included in the distribution.
+The</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 77.0.3"</span><span class="op">,</span> <span class="st">"setuptools-scm"</span><span class="op">]</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
+</div>
+<p>For simple Python packages like this one, the choice of build system
+doesn’t have much impact.</p>
+<div class="section level3">
+<h3 id="adding-dependency-information">Adding Dependency Information<a class="anchor" aria-label="anchor" href="#adding-dependency-information"></a>
+</h3>
+<p>So far we don’t yet have any information about the code and its
+dependencies. We need to add information about the Python versions that
+this project can use, as well as the dependencies.</p>
+<p>Our project requires Python 3.13 or later, and from our initial
+installation, we know we need the packages <code>click</code>,
+<code>numpy</code>, <code>pillow</code>, <code>rich</code>,
+<code>rich-pixels</code>, <code>toga</code>, <code>torch</code>,
+<code>torchvision &gt;= 0.13</code> and <code>tqdm</code>.</p>
+<p>These are added to the <code>[project]</code> section of the
+<code>pyproject.toml</code>:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">[project]</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>    <span class="st">"click"</span><span class="op">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>    <span class="st">"rich-pixels"</span><span class="op">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    <span class="st">"toga"</span><span class="op">,</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>    <span class="st">"tqdm"</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a><span class="op">]</span></span></code></pre>
+</div>
+<p>At this point we can install the package and its dependencies with a
+command like:</p>
+<pre class="console"><code>pip install -e .</code></pre>
+</div>
+<div class="section level3">
+<h3 id="optional-dependencies">Optional Dependencies<a class="anchor" aria-label="anchor" href="#optional-dependencies"></a>
+</h3>
+<p>The downside of simply listing all of the dependencies is that we
+require the user to install <em>all</em> the dependencies, whether or
+not the user is going to use them. For example, if they are using the
+code as a library on a system without a GUI (such as an HPC cluster)
+then installing the dependencies for the GUI are not very useful.
+Similarly if the project is being used purely as a library, perhaps on a
+web server or in a Jupyter notebook, then the command-line tool is not
+particularly useful, and so the CLI dependencies are not needed.</p>
+<p>We can solve this problem by adding “optional dependencies” for each
+of the additional capabilities. We do this by adding a new
+<code>[project.optional-dependencies]</code> section with entries for
+the CLI and GUI:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">[project]</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a>    <span class="st">"tqdm"</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="op">]</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="kw">[project.optional-dependencies]</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a>    <span class="st">"click"</span><span class="op">,</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a>    <span class="st">"rich-pixels"</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="op">]</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span></code></pre>
+</div>
+<p>(Note that there is nothing special about the names “gui” and
+“cli”).</p>
+<p>With this structure, if we use:</p>
+<pre class="console"><code>pip install -e .</code></pre>
+<p>it will only install the core dependencies for the library. If we
+want to install the GUI we would have to explicitly add it:</p>
+<pre class="console"><code>pip install -e ".[gui]"</code></pre>
+<p>and if we wanted both GUI and CLI we would need:</p>
+<pre class="console"><code>pip install -e ".[gui,cli]"</code></pre>
+</div>
+<div class="section level3">
+<h3 id="dependency-groups">Dependency Groups<a class="anchor" aria-label="anchor" href="#dependency-groups"></a>
+</h3>
+<p>Sometimes there are tools which developers might need to work on your
+code. In our example we use tools like <code>black</code>,
+<code>flake8</code> and <code>isort</code> to help maintain code
+quality. We could (and some projects do) add an additional optional
+dependency section (frequently called “dev”) with these
+dependencies.</p>
+<p>These tools don’t need to have the project code installed to work,
+and so in these cases you can instead use “dependency groups”:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="kw">[dependency-groups]</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>    <span class="st">"black"</span><span class="op">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>    <span class="st">"flake8"</span><span class="op">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="st">"isort"</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a><span class="op">]</span></span></code></pre>
+</div>
+<p>These can now be installed using:</p>
+<pre class="console"><code>pip install --group dev</code></pre>
+<p>so they can be run without having to install the project itself.</p>
+</div>
+<div class="section level3">
+<h3 id="updating-ci">Updating CI<a class="anchor" aria-label="anchor" href="#updating-ci"></a>
+</h3>
+<p>The project has a GitHub Action for running tests. As currently
+written it just installs every dependency by name. We can now update it
+to install using the <code>pyproject.toml</code>. We can change the line
+<code>pip install numpy pillow torch 'torchvision &gt;= 0.13' tqdm</code>
+to simply <code>pip install -e .</code>, and the line
+<code>pip install black flake8 isort</code> to
+<code>pip install --group dev</code>.</p>
+<p>The updated action looks like this:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Unit Tests</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="fu">on</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">push</span><span class="kw">]</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a><span class="at">    </span><span class="fu">strategy</span><span class="kw">:</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a><span class="at">      </span><span class="fu">matrix</span><span class="kw">:</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a><span class="at">        </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"3.13"</span><span class="kw">,</span><span class="at"> </span><span class="st">"3.14"</span><span class="kw">]</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1" aria-label="code-block-16-10"></a><span class="at">        </span><span class="fu">os</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"ubuntu-latest"</span><span class="kw">,</span><span class="at"> </span><span class="st">"macos-latest"</span><span class="kw">,</span><span class="at"> </span><span class="st">"windows-latest"</span><span class="kw">]</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1" aria-label="code-block-16-11"></a></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1" aria-label="code-block-16-12"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ${{ matrix.os }}</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1" aria-label="code-block-16-13"></a></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1" aria-label="code-block-16-14"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1" aria-label="code-block-16-15"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v7</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1" aria-label="code-block-16-16"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python ${{ matrix.python-version }}</span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1" aria-label="code-block-16-17"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v6</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1" aria-label="code-block-16-18"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1" aria-label="code-block-16-19"></a><span class="at">          </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> ${{ matrix.python-version }}</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1" aria-label="code-block-16-20"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1" aria-label="code-block-16-21"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1" aria-label="code-block-16-22"></a>           pip install -U pip</span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1" aria-label="code-block-16-23"></a>           pip install -e .</span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1" aria-label="code-block-16-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run tests</span></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1" aria-label="code-block-16-25"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1" aria-label="code-block-16-26"></a>          python -m unittest discover -v tests</span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1" aria-label="code-block-16-27"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check style</span></span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1" aria-label="code-block-16-28"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1" aria-label="code-block-16-29"></a>          pip install --group dev</span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1" aria-label="code-block-16-30"></a>          isort --check .</span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1" aria-label="code-block-16-31"></a>          black --check .</span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1" aria-label="code-block-16-32"></a>          flake8 image_classifiers tests</span></code></pre>
+</div>
+<p>Doing this means that if we update or change the dependencies in the
+future, we don’t need to update the GitHub Action - it will install the
+updated dependencies automatically.</p>
+</div>
+<div class="section level3">
+<h3 id="scripts">Scripts<a class="anchor" aria-label="anchor" href="#scripts"></a>
+</h3>
+<p>Right now if we want to run the CLI tool or GUI app we need to run it
+using <code>python -m</code> to run the module as the main script. The
+<code>pyproject.toml</code> provides a way to let Python know that
+certain code is meant to be run as a command-line script.</p>
+<p>You can add a <code>[project.scripts]</code> section which lists
+command-line scripts:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="kw">[project.scripts]</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a><span class="dt">image-classifier-cli</span> <span class="op">=</span> <span class="st">"image_classifiers.cli:predict"</span></span></code></pre>
+</div>
+<p>The key on the left is the name of the command that will be added,
+and the right consists of the name of the module and function that will
+be run. It is equivalent to:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="im">from</span> image_classifiers.cli <span class="im">import</span> predict</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a>predict()</span></code></pre>
+</div>
+<p>For GUIs you need to instead use:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="kw">[project.gui-scripts]</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a><span class="dt">image-classifier-gui</span> <span class="op">=</span> <span class="st">"image_classifiers.gui:main"</span></span></code></pre>
+</div>
+<p>This distinction only matters on Windows, otherwise the two are
+equivalent.</p>
+<p>Once you have done this (and re-run
+<code>pip install -e ".[gui,cli]"</code>) you should be able to use the
+new commands in your shell. For example, to run the CLI:</p>
+<pre class="console"><code>image-classifier-cli tests/data/*.jpg</code></pre>
+<div id="flat-vs.-src-project-layout" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="flat-vs.-src-project-layout" class="callout-inner">
+<h3 class="callout-title">“Flat” vs. “src” Project Layout</h3>
+<div class="callout-content">
+<p>The code in the example is currently in what is sometimes called
+“flat layout”: the Python packages defined in the project
+(<code>image_classifiers</code> in this case) are in the top level
+project directory. It is common, however, to instead have a
+<code>src</code> directory which contains the packages instead which is
+sometimes called “src layout”. There are advantages and disadvantages of
+both approaches.</p>
+<p>The primary advantage of the “flat layout” is that the code is
+directly importable from the top-level directory without needing a
+<code>pyproject.toml</code> or any infrastructure: that’s why this
+example is build this way. In particular, if you use “src layout” but
+don’t have a <code>pyproject.toml</code>, you couldn’t run the scripts
+via commands like <code>python -m image_classifiers.cli</code>.</p>
+<p>However there are disadvantages of the “flat layout” once you have a
+<code>pyproject.toml</code> and have run <code>pip install -e .</code>
+(or worse, <code>pip install .</code>) In these cases it is sometimes
+unclear how an import is finding the code and in worst cases you can
+have two versions of a module in memory!</p>
+<p>For this reason it’s a good idea once you have added a
+<code>pyproject.toml</code> and any <code>project.scripts</code>, to
+migrate to “src layout”. This is usually pretty easy:</p>
+<pre class="console"><code>mkdir src
+git mv image_classifiers src</code></pre>
+<p>If you use the <code>hatchling</code> build system, it requires “src
+layout”.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="adding-project-metadata">Adding Project Metadata<a class="anchor" aria-label="anchor" href="#adding-project-metadata"></a>
+</h3>
+<p>After you have set up the information about the code and
+dependencies, generally you will want to add a lot more metadata about
+your project. For example you might add the following to the
+<code>[project]</code> section (updating the authors and maintainers
+sections appropriately):</p>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1" aria-label="code-block-22-2"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1" aria-label="code-block-22-3"></a><span class="op">]</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1" aria-label="code-block-22-4"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1" aria-label="code-block-22-5"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1" aria-label="code-block-22-6"></a><span class="op">]</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1" aria-label="code-block-22-7"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project that makes Torchvision classifiers available for inference."</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1" aria-label="code-block-22-8"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1" aria-label="code-block-22-9"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1" aria-label="code-block-22-10"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E*"</span><span class="op">]</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1" aria-label="code-block-22-11"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"image classification"</span><span class="op">,</span> <span class="st">"deep learning"</span><span class="op">,</span> <span class="st">"neural networks"</span><span class="op">,</span> <span class="st">"pytorch"</span><span class="op">,</span> <span class="st">"torchvision"</span><span class="op">]</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1" aria-label="code-block-22-12"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1" aria-label="code-block-22-13"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1" aria-label="code-block-22-14"></a>  <span class="st">"Programming Language :: Python"</span><span class="op">,</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1" aria-label="code-block-22-15"></a>  <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1" aria-label="code-block-22-16"></a>  <span class="st">"Operating System :: MacOS :: MacOS X"</span><span class="op">,</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1" aria-label="code-block-22-17"></a>  <span class="st">"Operating System :: Windows"</span><span class="op">,</span></span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1" aria-label="code-block-22-18"></a>  <span class="st">"Operating System :: POSIX :: Linux"</span><span class="op">,</span></span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1" aria-label="code-block-22-19"></a>  <span class="st">"Topic :: Education"</span><span class="op">,</span></span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1" aria-label="code-block-22-20"></a>  <span class="st">"Topic :: Scientific/Engineering :: Artificial Intelligence"</span><span class="op">,</span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1" aria-label="code-block-22-21"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Processing"</span><span class="op">,</span></span>
+<span id="cb22-22"><a href="#cb22-22" tabindex="-1" aria-label="code-block-22-22"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Recognition"</span><span class="op">,</span></span>
+<span id="cb22-23"><a href="#cb22-23" tabindex="-1" aria-label="code-block-22-23"></a>  <span class="st">"Topic :: Software Development :: Libraries :: Python Modules"</span><span class="op">,</span></span>
+<span id="cb22-24"><a href="#cb22-24" tabindex="-1" aria-label="code-block-22-24"></a>  <span class="st">"Topic :: System :: Archiving :: Packaging"</span></span>
+<span id="cb22-25"><a href="#cb22-25" tabindex="-1" aria-label="code-block-22-25"></a><span class="op">]</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="adding-tool-configuration">Adding Tool Configuration<a class="anchor" aria-label="anchor" href="#adding-tool-configuration"></a>
+</h3>
+<p>Most code quality tools have options which can be configured. This
+can be done through command-line options, but usually you want the same
+options every time you run the tools in a project. In this case the
+tools often have a configuration file format that they can use to store
+these commonly-used configuration options.</p>
+<p>For most of these tools, this can be inside the
+<code>pyproject.toml</code> file itself. For example our project
+currently has an <code>.isort.cfg</code> file which looks like this:</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="kw">[settings]</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1" aria-label="code-block-23-2"></a><span class="dt">profile </span><span class="ot">=</span><span class="st"> black</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1" aria-label="code-block-23-3"></a><span class="dt">line_length </span><span class="ot">=</span><span class="st"> </span><span class="dv">88</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1" aria-label="code-block-23-4"></a><span class="dt">order_by_type </span><span class="ot">=</span><span class="st"> </span><span class="kw">false</span></span></code></pre>
+</div>
+<p>We can move this to a <code>[tool.isort]</code> section inside the
+<code>pyproject.toml</code>:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="kw">[tool.isort]</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1" aria-label="code-block-24-2"></a><span class="dt">profile</span> <span class="op">=</span> <span class="st">"black"</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1" aria-label="code-block-24-3"></a><span class="dt">line_length</span> <span class="op">=</span> <span class="dv">88</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1" aria-label="code-block-24-4"></a><span class="dt">order_by_type</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre>
+</div>
+<p>and then remove the <code>.isort.cfg</code>:</p>
+<pre class="console"><code>git rm .isort.cfg</code></pre>
+<p>Unfortunately <code>flake8</code> doesn’t currently support this sort
+of usage of <code>pyproject.toml</code> yet.</p>
+</div>
+<div class="section level3">
+<h3 id="the-complete-pyproject-toml">The Complete <code>pyproject.toml</code>
+<a class="anchor" aria-label="anchor" href="#the-complete-pyproject-toml"></a>
+</h3>
+<p>After all of this, your <code>pyproject.toml</code> should look like
+this:</p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 77.0.3"</span><span class="op">,</span> <span class="st">"setuptools-scm"</span><span class="op">]</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1" aria-label="code-block-26-4"></a></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1" aria-label="code-block-26-5"></a><span class="kw">[project]</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1" aria-label="code-block-26-6"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-corran"</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1" aria-label="code-block-26-7"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1" aria-label="code-block-26-8"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1" aria-label="code-block-26-9"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1" aria-label="code-block-26-10"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1" aria-label="code-block-26-11"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1" aria-label="code-block-26-12"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1" aria-label="code-block-26-13"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1" aria-label="code-block-26-14"></a>    <span class="st">"tqdm"</span></span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1" aria-label="code-block-26-15"></a><span class="op">]</span></span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1" aria-label="code-block-26-16"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1" aria-label="code-block-26-17"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1" aria-label="code-block-26-18"></a><span class="op">]</span></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1" aria-label="code-block-26-19"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-20"><a href="#cb26-20" tabindex="-1" aria-label="code-block-26-20"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb26-21"><a href="#cb26-21" tabindex="-1" aria-label="code-block-26-21"></a><span class="op">]</span></span>
+<span id="cb26-22"><a href="#cb26-22" tabindex="-1" aria-label="code-block-26-22"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project that makes Torchvision classifiers available for inference."</span></span>
+<span id="cb26-23"><a href="#cb26-23" tabindex="-1" aria-label="code-block-26-23"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
+<span id="cb26-24"><a href="#cb26-24" tabindex="-1" aria-label="code-block-26-24"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
+<span id="cb26-25"><a href="#cb26-25" tabindex="-1" aria-label="code-block-26-25"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E*"</span><span class="op">]</span></span>
+<span id="cb26-26"><a href="#cb26-26" tabindex="-1" aria-label="code-block-26-26"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"image classification"</span><span class="op">,</span> <span class="st">"deep learning"</span><span class="op">,</span> <span class="st">"neural networks"</span><span class="op">,</span> <span class="st">"pytorch"</span><span class="op">,</span> <span class="st">"torchvision"</span><span class="op">]</span></span>
+<span id="cb26-27"><a href="#cb26-27" tabindex="-1" aria-label="code-block-26-27"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-28"><a href="#cb26-28" tabindex="-1" aria-label="code-block-26-28"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
+<span id="cb26-29"><a href="#cb26-29" tabindex="-1" aria-label="code-block-26-29"></a>  <span class="st">"Programming Language :: Python"</span><span class="op">,</span></span>
+<span id="cb26-30"><a href="#cb26-30" tabindex="-1" aria-label="code-block-26-30"></a>  <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
+<span id="cb26-31"><a href="#cb26-31" tabindex="-1" aria-label="code-block-26-31"></a>  <span class="st">"Operating System :: MacOS :: MacOS X"</span><span class="op">,</span></span>
+<span id="cb26-32"><a href="#cb26-32" tabindex="-1" aria-label="code-block-26-32"></a>  <span class="st">"Operating System :: Microsoft :: Windows"</span><span class="op">,</span></span>
+<span id="cb26-33"><a href="#cb26-33" tabindex="-1" aria-label="code-block-26-33"></a>  <span class="st">"Operating System :: POSIX :: Linux"</span><span class="op">,</span></span>
+<span id="cb26-34"><a href="#cb26-34" tabindex="-1" aria-label="code-block-26-34"></a>  <span class="st">"Topic :: Education"</span><span class="op">,</span></span>
+<span id="cb26-35"><a href="#cb26-35" tabindex="-1" aria-label="code-block-26-35"></a>  <span class="st">"Topic :: Scientific/Engineering :: Artificial Intelligence"</span><span class="op">,</span></span>
+<span id="cb26-36"><a href="#cb26-36" tabindex="-1" aria-label="code-block-26-36"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Processing"</span><span class="op">,</span></span>
+<span id="cb26-37"><a href="#cb26-37" tabindex="-1" aria-label="code-block-26-37"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Recognition"</span><span class="op">,</span></span>
+<span id="cb26-38"><a href="#cb26-38" tabindex="-1" aria-label="code-block-26-38"></a>  <span class="st">"Topic :: Software Development :: Libraries :: Python Modules"</span><span class="op">,</span></span>
+<span id="cb26-39"><a href="#cb26-39" tabindex="-1" aria-label="code-block-26-39"></a>  <span class="st">"Topic :: System :: Archiving :: Packaging"</span></span>
+<span id="cb26-40"><a href="#cb26-40" tabindex="-1" aria-label="code-block-26-40"></a><span class="op">]</span></span>
+<span id="cb26-41"><a href="#cb26-41" tabindex="-1" aria-label="code-block-26-41"></a></span>
+<span id="cb26-42"><a href="#cb26-42" tabindex="-1" aria-label="code-block-26-42"></a><span class="kw">[project.optional-dependencies]</span></span>
+<span id="cb26-43"><a href="#cb26-43" tabindex="-1" aria-label="code-block-26-43"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-44"><a href="#cb26-44" tabindex="-1" aria-label="code-block-26-44"></a>    <span class="st">"click"</span><span class="op">,</span></span>
+<span id="cb26-45"><a href="#cb26-45" tabindex="-1" aria-label="code-block-26-45"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
+<span id="cb26-46"><a href="#cb26-46" tabindex="-1" aria-label="code-block-26-46"></a>    <span class="st">"rich-pixels"</span></span>
+<span id="cb26-47"><a href="#cb26-47" tabindex="-1" aria-label="code-block-26-47"></a><span class="op">]</span></span>
+<span id="cb26-48"><a href="#cb26-48" tabindex="-1" aria-label="code-block-26-48"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span>
+<span id="cb26-49"><a href="#cb26-49" tabindex="-1" aria-label="code-block-26-49"></a></span>
+<span id="cb26-50"><a href="#cb26-50" tabindex="-1" aria-label="code-block-26-50"></a><span class="kw">[dependency-groups]</span></span>
+<span id="cb26-51"><a href="#cb26-51" tabindex="-1" aria-label="code-block-26-51"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb26-52"><a href="#cb26-52" tabindex="-1" aria-label="code-block-26-52"></a>    <span class="st">"black"</span><span class="op">,</span></span>
+<span id="cb26-53"><a href="#cb26-53" tabindex="-1" aria-label="code-block-26-53"></a>    <span class="st">"flake8"</span><span class="op">,</span></span>
+<span id="cb26-54"><a href="#cb26-54" tabindex="-1" aria-label="code-block-26-54"></a>    <span class="st">"isort"</span></span>
+<span id="cb26-55"><a href="#cb26-55" tabindex="-1" aria-label="code-block-26-55"></a><span class="op">]</span></span>
+<span id="cb26-56"><a href="#cb26-56" tabindex="-1" aria-label="code-block-26-56"></a></span>
+<span id="cb26-57"><a href="#cb26-57" tabindex="-1" aria-label="code-block-26-57"></a><span class="kw">[project.scripts]</span></span>
+<span id="cb26-58"><a href="#cb26-58" tabindex="-1" aria-label="code-block-26-58"></a><span class="dt">image-classifier-cli</span> <span class="op">=</span> <span class="st">"image_classifiers.cli:predict"</span></span>
+<span id="cb26-59"><a href="#cb26-59" tabindex="-1" aria-label="code-block-26-59"></a></span>
+<span id="cb26-60"><a href="#cb26-60" tabindex="-1" aria-label="code-block-26-60"></a><span class="kw">[project.gui-scripts]</span></span>
+<span id="cb26-61"><a href="#cb26-61" tabindex="-1" aria-label="code-block-26-61"></a><span class="dt">image-classifier-gui</span> <span class="op">=</span> <span class="st">"image_classifiers.gui:main"</span></span>
+<span id="cb26-62"><a href="#cb26-62" tabindex="-1" aria-label="code-block-26-62"></a></span>
+<span id="cb26-63"><a href="#cb26-63" tabindex="-1" aria-label="code-block-26-63"></a><span class="kw">[tool.isort]</span></span>
+<span id="cb26-64"><a href="#cb26-64" tabindex="-1" aria-label="code-block-26-64"></a><span class="dt">profile</span> <span class="op">=</span> <span class="st">"black"</span></span>
+<span id="cb26-65"><a href="#cb26-65" tabindex="-1" aria-label="code-block-26-65"></a><span class="dt">line_length</span> <span class="op">=</span> <span class="dv">88</span></span>
+<span id="cb26-66"><a href="#cb26-66" tabindex="-1" aria-label="code-block-26-66"></a><span class="dt">order_by_type</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="building-distributions">Building Distributions<a class="anchor" aria-label="anchor" href="#building-distributions"></a>
+</h2>
+<p>We can now build source distributions and wheels easily. First
+install <code>build</code>:</p>
+<pre class="console"><code>pip install build</code></pre>
+<p>And then run it:</p>
+<pre class="console"><code>python -m build</code></pre>
+<p>You should now have a dist directory which contains a
+<code>.wheel</code> file and a <code>.tar.gz</code> source distribution.
+These files can be shared however you want and then used with
+<code>pip</code> for yourself or other people to install. A common
+strategy, particularly for closed source packages, is when you do a
+release of your code, to add them to release page on your version
+control system.</p>
+<p>You can also upload them to PyPI if your package is open source.
+Doing this is straightforward once you have a PyPI account set up;
+however setting up a PyPI account (even a Test one) is complex because
+PyPI requires strong authentication so we won’t do this as part of the
+activity.</p>
+</div>
+<div class="section level2">
+<h2 id="building-applications">Building Applications<a class="anchor" aria-label="anchor" href="#building-applications"></a>
+</h2>
+<p>While distributing your work via pip is useful, sometimes you want to
+be able to give collaborators a simple installer or executable which
+allows them to run your scripts. There are a number of tools available
+that can do this. We’ll use the <code>briefcase</code> tool, because it
+has the best integration with OS code signing and app stores.</p>
+<p>To use <code>briefcase</code> you first install it with pip:</p>
+<pre class="console"><code>pip install briefcase</code></pre>
+<p>and then you add information about your application to the
+<code>pyproject.toml</code></p>
+<div class="codewrapper sourceCode" id="cb30">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a><span class="kw">[tool.briefcase]</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1" aria-label="code-block-30-2"></a><span class="dt">project_name</span> <span class="op">=</span> <span class="st">"Image Classifiers"</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1" aria-label="code-block-30-3"></a><span class="dt">bundle</span> <span class="op">=</span> <span class="st">"uk.ac.soton.example"</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1" aria-label="code-block-30-4"></a><span class="dt">url</span> <span class="op">=</span> <span class="st">"https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging-example"</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1" aria-label="code-block-30-5"></a></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1" aria-label="code-block-30-6"></a><span class="kw">[tool.briefcase.app.image-classifiers]</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1" aria-label="code-block-30-7"></a><span class="dt">formal_name</span> <span class="op">=</span> <span class="st">"Image Classifiers"</span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1" aria-label="code-block-30-8"></a><span class="dt">sources</span> <span class="op">=</span> <span class="op">[</span><span class="st">"image_classifiers"</span><span class="op">]</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1" aria-label="code-block-30-9"></a><span class="dt">console_app</span> <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1" aria-label="code-block-30-10"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1" aria-label="code-block-30-11"></a></span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1" aria-label="code-block-30-12"></a><span class="kw">[tool.briefcase.app.image-classifiers.macOS]</span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1" aria-label="code-block-30-13"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">'</span><span class="vs">std-nslog&gt;=1.0.0</span><span class="st">'</span><span class="op">]</span></span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1" aria-label="code-block-30-14"></a><span class="co"># Recent Pytorch is not supported on Intel macs.</span></span>
+<span id="cb30-15"><a href="#cb30-15" tabindex="-1" aria-label="code-block-30-15"></a><span class="dt">universal_build</span> <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb30-16"><a href="#cb30-16" tabindex="-1" aria-label="code-block-30-16"></a><span class="co"># Make sure the app can use the camera.</span></span>
+<span id="cb30-17"><a href="#cb30-17" tabindex="-1" aria-label="code-block-30-17"></a><span class="dt">entitlement."com.apple.security.device.camera"</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb30-18"><a href="#cb30-18" tabindex="-1" aria-label="code-block-30-18"></a><span class="dt">info."NSCameraUsageDescription"</span> <span class="op">=</span> <span class="st">"Enable the camera to classify images interactively."</span></span>
+<span id="cb30-19"><a href="#cb30-19" tabindex="-1" aria-label="code-block-30-19"></a></span>
+<span id="cb30-20"><a href="#cb30-20" tabindex="-1" aria-label="code-block-30-20"></a><span class="kw">[tool.briefcase.app.image-classifiers.linux]</span></span>
+<span id="cb30-21"><a href="#cb30-21" tabindex="-1" aria-label="code-block-30-21"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[]</span></span>
+<span id="cb30-22"><a href="#cb30-22" tabindex="-1" aria-label="code-block-30-22"></a></span>
+<span id="cb30-23"><a href="#cb30-23" tabindex="-1" aria-label="code-block-30-23"></a><span class="kw">[tool.briefcase.app.image-classifiers.windows]</span></span>
+<span id="cb30-24"><a href="#cb30-24" tabindex="-1" aria-label="code-block-30-24"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[]</span></span></code></pre>
+</div>
+<p>There’s a lot more configuration that can be done, for example adding
+custom icons, but this hopefully gives a sense of the configuration that
+is needed:</p>
+<ul>
+<li>a main section with project information;</li>
+<li>a sub-section for each application in the project;</li>
+<li>a sub-sub-section for each operating system that the application
+supports.</li>
+</ul>
+<p>The key entries are the <code>sources</code> and
+<code>requires</code> entries. The <code>sources</code> indicate
+application code that needs to be installed, while the
+<code>requires</code> entries are dependencies that are needed for a
+particular app or platform.</p>
+<p>You can test the app in “development” mode using the command:</p>
+<pre class="console"><code>briefcase dev</code></pre>
+<p>To build the actual application or app installer, you run:</p>
+<pre class="console"><code>briefcase create
+briefcase build</code></pre>
+<p>You can test-run the built application using:</p>
+<pre class="console"><code>briefcase run</code></pre>
+<p>Finally, you can package the application. On Mac and Windows it will
+default to self-signing the app: you will need to get a signing identity
+to sign your code if you want to be able to run the app on other
+machines or submit to an app store.</p>
+<pre class="console"><code>briefcase package</code></pre>
+<p>The package is in the <code>dist</code> subdirectory, and from there
+you can access it and copy it to wherever you need.</p>
+<div id="automation-of-packaging" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="automation-of-packaging" class="callout-inner">
+<h3 class="callout-title">Automation of Packaging</h3>
+<div class="callout-content">
+<p>This activity has been assuming that you are working with an existing
+project that you now want to distribute more widely without breaking
+anything. This is common in research software. However sometimes you
+know before you start that you want to distribute your software in a
+particular way. In these cases some of the tools will create the
+<code>pyproject.toml</code> for you.</p>
+<p>Hatch will set up a complete project for you, with a skeleton
+framework of files and packages that you can then start adding code to.
+It also will set up a lot of the testing and CI framework for you.</p>
+<p>If you are looking to build an application or command-line tool, then
+Briefcase can also set up the framework for that, leading you through
+the setup for the platform you want to distribute for.</p>
+<p>With all of these tools you may need to manually edit the
+<code>pyproject.toml</code> to do things like add or remove
+dependencies.</p>
 </div>
 </div>
 </div>
@@ -488,7 +1568,8 @@ locally</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></section>
+</div>
+</div></section>
 </div>
     </main>
 </div>
@@ -501,14 +1582,14 @@ any links that you are not going to use.
         <p>This lesson is subject to the <a href="CODE_OF_CONDUCT.html">Code of Conduct</a></p>
         <p>
 
-        <a href="https://github.com/carpentries/workbench-template-md/edit/main/README.md" class="external-link">Edit on GitHub</a>
+        <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/edit/main/README.md" class="external-link">Edit on GitHub</a>
 
 	
-        | <a href="https://github.com/carpentries/workbench-template-md/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
-        | <a href="https://github.com/carpentries/workbench-template-md/" class="external-link">Source</a></p>
+        | <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
+        | <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/" class="external-link">Source</a></p>
         <p>
         <a href="../citation.html">Cite</a>
-        | <a href="mailto:team@carpentries.org">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
+        | <a href="mailto:C.J.Webster@soton.ac.uk">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
 		</div>
 		<div class="col-md-6">
 
@@ -528,18 +1609,18 @@ any links that you are not going to use.
     {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "@id": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
+  "@id": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/aio.html",
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
-  "keywords": "software, data, lesson, The Carpentries",
+  "keywords": "packaging, Python, PyPI, setuptools, pip, pyproject.toml, briefcase",
   "name": "All in One View",
   "creativeWorkStatus": "active",
-  "url": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
-  "identifier": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
+  "url": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/aio.html",
+  "identifier": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/aio.html",
   "dateCreated": "2026-08-14",
-  "dateModified": "2026-08-18",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>
