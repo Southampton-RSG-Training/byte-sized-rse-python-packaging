@@ -19,24 +19,25 @@ exercises: 0
 
 # Packaging Python Code
 
+Packaging and distribution of code is an issue no matter what language you write software in. In this course we're going to look specifically at Python, and how to package it in various ways that may be useful for research codebases.  However, most of the ideas discussed in this course carry over to other languages, particularly high-level languages like R and Javascript.
 
 ## The Problem of Packaging
 
-Once you get beyond the most basic of programs you are going to start depending on other code to do things. At the most fundamental level it may be calling out to system functions, or standard libraries of the language you are working with, but in the real world there are likely to be many packages and libraries of code that you end up using to a greater and lesser degree.
+Once you get beyond the most basic of programs you are going to start depending on other code to do things. At the most fundamental level it may be calling out to system functions, or to standard libraries of the language you are working with, but in the real world there are likely to be many packages and libraries of code that you end up using to a greater and lesser degree.
 
-This may be acceptable when you are the only consumer of your code, but as soon as you start wanting to share your code with others, you have the problem of how to ensure that the code that your program depends on is available.
+This may be acceptable when you are the only consumer of your code, working on systems where you control the environment completely, but as soon as you start wanting to share your code with others, you have the problem of ensuring that the environment that your program depends on is available.
 
-There are a number of ways of approaching this:
+There are two basic of ways of solving this problem:
 
 - include everything with your code (possibly up to and including the hardware it runs on!).  This is particularly applicable for *applications* which may rely on operating system functionality and nothing else.
 
-  Examples of this approach include Docker/Containers, C/C++ static builds, MSI installers on Windows, and tools like pyinstaller or briefcase in the Python world.
+  Examples of this approach include Docker/Containers, Linux Flatpak, C/C++ static builds, MSI installers on Windows, and tools like PyInstaller or Briefcase in the Python world.
 
 - include information about the dependencies alongside the code and rely on installation technologies to understand these dependencies and install them. This is common for code *libraries* that are themselves used by other code.
 
-  Examples of this approach includes Linux packaging technologies like APT or YUM, systems like Homebrew on Mac and Nuget on Windows, and the dependency resolution system used by pip/PyPI.
+  Examples of this approach includes Linux packaging technologies like APT or YUM, systems like Homebrew on Mac and Nuget on Windows, and the dependency resolution system used by pip/PyPI for Python or NPM for Javascript.
 
-In either case you need to be able to *specify* those dependencies, either because your build system needs to know what to include in the build, or because your installer needs to know what to add to the system.
+In both cases you need to be able to *specify* those dependencies, either because your build system needs to know what to include in the build, or because your installer needs to know what to add to the system.
 
 ::: callout
 
@@ -60,7 +61,7 @@ And also that packaging is **hard** to do, and even harder to get right. It's ta
 
 ## Packaging Python Scripts
 
-A common problem in research software is that you have a Python script that performs some analysis that you want to share.  A new way to do this is via ["Inline Script Metadata"](https://packaging.python.org/en/latest/specifications/inline-script-metadata).
+A common problem for research software is that you have a Python script that performs some analysis that you want to share.  A new way to do this is via ["Inline Script Metadata"](https://packaging.python.org/en/latest/specifications/inline-script-metadata).
 
 If you add a specially formatted comment like the following:
 ``` python
@@ -72,13 +73,15 @@ If you add a specially formatted comment like the following:
 # ]
 # ///
 ```
-then tools like pip can use this information to install the dependencies into a virtual environment using the [`--requirements-from-script`](https://pip.pypa.io/en/latest/cli/pip_install/#cmdoption-requirements-from-script) command-line option.
+then tools like `pip` can use this information to install the dependencies into a virtual environment using the [`--requirements-from-script`](https://pip.pypa.io/en/latest/cli/pip_install/#cmdoption-requirements-from-script) command-line option.
 
 This is great for *replication*: research scripts can specify under what conditions they expect to run, and then other tooling can ensure that there is an appropriate environment for the script to run as designed. If needed, precise versions can be specified.
 
 ::: callout
 
-### What Packages are Your Dependencies?
+### What Packages are 'Dependencies'?
+
+The packages that you rely on in your code also likely have dependencies of their own. And in turn *those* dependencies may have further dependencies. So an immediate question is what packages *should* you specify as dependencies of your script?
 
 A good rule of thumb is that if you directly import code from a package, then it should be a dependency.  In some cases this isn't strictly necessary because of chained dependencies: for example, if you depend on `torchvision`, then `torchvision` depends on `torch` and so you will automatically get `torch` installed and don't need to specify it as a separate dependency.
 
@@ -121,7 +124,7 @@ When you are using other people's code, you are implicitly *trusting* other peop
 
 - **supply-chain compromises** - if attackers can gain the credentials to write to a popular package they can potentially inject malicious code into the package which then is run by users of that package.  This can either be via compromising developer accounts, or using social engineering to gain the trust of the core developers of a package and then gaining commit rights to the project.  In at least one prominent case, a state-level actor took control of an open-source project.
 
-The main defence against these sorts of attack is vigilance: take care with dependencies, and make sure that you keep some visibility on the state of those projects (eg. subscribing to announcements, or reading news sources which report on these sorts of issues). If projects are compromised, they are usually up-front about the problem.
+The main defence against these sorts of attack is vigilance: take care with dependencies, and make sure that you keep some visibility on the state of those projects (eg. subscribing to announcements, or reading news sources which report on these sorts of issues). If well-run projects are compromised, they are usually up-front about the problem.
 
 :::
 
