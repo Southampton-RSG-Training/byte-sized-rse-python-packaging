@@ -34,31 +34,31 @@ To get started:
 - create a copy from the template by selecting "Use this template -> Create a new repository"
 - clone the repository to your local machine and go into the project directory
 
-``` console
+``` bash
 cd
 git clone git@github.com:[your-github-id]/byte-sized-rse-python-packaging-example.git
 cd byte-sized-rse-python-packaging-example
 ```
 
 To use the code, you can create a virtual environment an install all the dependencies:
-``` console
+``` bash
 python3 -m venv venv
 source venv/bin/activate
 pip install click numpy pillow rich rich-pixels toga torch "torchvision >= 0.13" tqdm
 ```
 
 You should then be able to run the tests:
-``` console
+``` bash
 python -m unittest discover tests
 ```
 
 The command-line tool:
-``` console
+``` bash
 python -m image_classifiers.cli tests/data/*.jpg
 ```
 
 And the GUI:
-``` console
+``` bash
 python -m image_classifiers.gui
 ```
 If you open an image file in the GUI, you should see the labels and probability of each label.
@@ -109,7 +109,7 @@ dependencies = [
 ```
 
 At this point we can install the package and its dependencies with a command like:
-``` console
+``` bash
 pip install -e .
 ```
 
@@ -142,15 +142,15 @@ gui = ["toga"]
 (Note that there is nothing special about the names "gui" and "cli").
 
 With this structure, if we use:
-``` console
+``` bash
 pip install -e .
 ```
 it will only install the core dependencies for the library.  If we want to install the GUI we would have to explicitly add it:
-``` console
+``` bash
 pip install -e ".[gui]"
 ```
 and if we wanted both GUI and CLI we would need:
-``` console
+``` bash
 pip install -e ".[gui,cli]"
 ```
 
@@ -168,7 +168,7 @@ dev = [
 ]
 ```
 These can now be installed using:
-``` console
+``` bash
 pip install --group dev
 ```
 so they can be run without having to install the project itself.
@@ -238,7 +238,7 @@ image-classifier-gui = "image_classifiers.gui:main"
 This distinction only matters on Windows, otherwise the two are equivalent.
 
 Once you have done this (and re-run `pip install -e ".[gui,cli]"`) you should be able to use the new commands in your shell. For example, to run the CLI:
-``` console
+``` bash
 image-classifier-cli tests/data/*.jpg
 ```
 
@@ -253,7 +253,7 @@ The primary advantage of the "flat layout" is that the code is directly importab
 However there are disadvantages of the "flat layout" once you have a `pyproject.toml` and have run `pip install -e .` (or worse, `pip install .`) In these cases it is sometimes unclear how an import is finding the code and in worst cases you can have two versions of a module in memory!
 
 For this reason it's a good idea once you have added a `pyproject.toml` and any `project.scripts`, to migrate to "src layout".  This is usually pretty easy:
-``` console
+``` bash
 mkdir src
 git mv image_classifiers src
 ```
@@ -314,7 +314,7 @@ line_length = 88
 order_by_type = false
 ```
 and then remove the `.isort.cfg`:
-``` console
+``` bash
 git rm .isort.cfg
 ```
 
@@ -395,12 +395,12 @@ order_by_type = false
 ## Building Distributions
 
 We can now build source distributions and wheels easily. First install `build`:
-``` console
+``` bash
 pip install build
 ```
 
 And then run it:
-``` console
+``` bash
 python -m build
 ```
 
@@ -413,7 +413,7 @@ You can also upload them to PyPI if your package is open source.  Doing this is 
 While distributing your work via pip is useful, sometimes you want to be able to give collaborators a simple installer or executable which allows them to run your scripts.  There are a number of tools available that can do this.  We'll use the `briefcase` tool, because it has the best integration with OS code signing and app stores.
 
 To use `briefcase` you first install it with pip:
-``` console
+``` bash
 pip install briefcase
 ```
 and then you add information about your application to the `pyproject.toml`
@@ -453,21 +453,21 @@ There's a lot more configuration that can be done, for example adding custom ico
 The key entries are the `sources` and `requires` entries. The `sources` indicate application code that needs to be installed, while the `requires` entries are dependencies that are needed for a particular app or platform.
 
 You can test the app in "development" mode using the command:
-``` console
+``` bash
 briefcase dev
 ```
 To build the actual application or app installer, you run:
-``` console
+``` bash
 briefcase create
 briefcase build
 ```
 You can test-run the built application using:
-``` console
+``` bash
 briefcase run
 ```
 
 Finally, you can package the application. On Mac and Windows it will default to self-signing the app: you will need to get a signing identity to sign your code if you want to be able to run the app on other machines or submit to an app store.
-``` console
+``` bash
 briefcase package
 ```
 The package is in the `dist` subdirectory, and from there you can access it and copy it to wherever you need.
