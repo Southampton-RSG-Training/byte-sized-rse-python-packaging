@@ -63,12 +63,16 @@ The command-line tool:
 ``` bash
 python -m image_classifiers.cli tests/data/*.jpg
 ```
+![CLI](CLI_screenshot.png)
+
 
 And the GUI:
 ``` bash
 python -m image_classifiers.gui
 ```
 If you open an image file in the GUI, you should see the labels and probability of each label.
+
+![GUI Screenshot](GUI_app_screenshot.png)
 
 :::
 
