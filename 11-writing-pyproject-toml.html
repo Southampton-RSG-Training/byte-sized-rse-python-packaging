@@ -329,7 +329,15 @@ these models,</li>
 files,</li>
 <li>a GUI app that lets you perform inference on image files (and on
 some platforms, images from a web cam).</li>
-</ul><p>To get started:</p>
+</ul><div id="setup" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="setup" class="callout-inner">
+<h3 class="callout-title">Setup</h3>
+<div class="callout-content">
+<p>To get started:</p>
 <ul><li>create a copy from the template by selecting “Use this template
 -&gt; Create a new repository”</li>
 <li>clone the repository to your local machine and go into the project
@@ -371,20 +379,35 @@ the dependencies:</p>
 <p>If you open an image file in the GUI, you should see the labels and
 probability of each label.</p>
 </div>
+</div>
+</div>
+</div>
 <div class="section level2">
 <h2 id="adding-a-pyproject-toml">Adding a <code>pyproject.toml</code>
 <a class="anchor" aria-label="anchor" href="#adding-a-pyproject-toml"></a></h2>
 <p>The first step in packaging your project is to create a
-<code>pyproject.toml</code> file. In your editor of choice, at the top
-level of the repository, create a new file called
-<code>pyproject.toml</code>. In the file, add the following, changing
-the name of the project appropriately:</p>
+<code>pyproject.toml</code> file.</p>
+<div id="create-a-minimal-pyproject.toml-file" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="create-a-minimal-pyproject.toml-file" class="callout-inner">
+<h3 class="callout-title">Create a minimal <code>pyproject.toml</code>
+file</h3>
+<div class="callout-content">
+<p>In your editor of choice, at the top level of the repository, create
+a new file called <code>pyproject.toml</code>. In the file, add the
+following, changing the name of the project appropriately:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="kw">[project]</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span></code></pre>
+</div>
+</div>
+</div>
 </div>
 <p>This is the absolute minimum that you need. With just this you can
 build and install your project with <code>pip</code>, but usually you
@@ -395,12 +418,26 @@ tests) and we want to also use <code>setuptools-scm</code> to make sure
 that all files under version control are included in the distribution
 (there are ways to include and exclude extra files if needed, but we
 don’t need to).</p>
+<div id="add-build-system-dependencies" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="add-build-system-dependencies" class="callout-inner">
+<h3 class="callout-title">Add build-system dependencies</h3>
+<div class="callout-content">
+<p>Add the following to your <code>pyproject.toml</code>. It’s
+customary, although not necessary to add this at the top of your
+file.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">[build-system]</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 77.0.3"</span><span class="op">,</span> <span class="st">"setuptools-scm"</span><span class="op">]</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span></code></pre>
+</div>
+</div>
+</div>
 </div>
 <p>For simple Python packages like this one, the choice of build system
 doesn’t have much impact.</p>
@@ -409,38 +446,63 @@ doesn’t have much impact.</p>
 <p>So far we don’t yet have any information about the code and its
 dependencies. We need to add information about the Python versions that
 this project can use, as well as the dependencies.</p>
+<div id="add-dependencies" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="add-dependencies" class="callout-inner">
+<h3 class="callout-title">Add Dependencies</h3>
+<div class="callout-content">
 <p>Our project requires Python 3.13 or later, and from our initial
 installation, we know we need the packages <code>click</code>,
 <code>numpy</code>, <code>pillow</code>, <code>rich</code>,
 <code>rich-pixels</code>, <code>toga</code>, <code>torch</code>,
 <code>torchvision &gt;= 0.13</code> and <code>tqdm</code>.</p>
-<p>These are added to the <code>[project]</code> section of the
-<code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">[project]</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>    <span class="st">"click"</span><span class="op">,</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>    <span class="st">"rich-pixels"</span><span class="op">,</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    <span class="st">"toga"</span><span class="op">,</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>    <span class="st">"tqdm"</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a><span class="op">]</span></span></code></pre>
-</div>
-<p>At this point we can install the package and its dependencies with a
+<p>Add the <code>requires-python</code> and <code>dependencies</code>
+information to the <code>[project]</code> section of the
+<code>pyproject.toml</code>.</p>
+<p>Check that you can install the package and its dependencies with a
 command like:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>The <code>[project]</code> section of the <code>pyproject.toml</code>
+should now look like this:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="kw">[project]</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>    <span class="st">"click"</span><span class="op">,</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>    <span class="st">"rich-pixels"</span><span class="op">,</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>    <span class="st">"toga"</span><span class="op">,</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a>    <span class="st">"tqdm"</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a><span class="op">]</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section level3">
@@ -456,50 +518,79 @@ particularly useful, and so the CLI dependencies are not needed.</p>
 <p>We can solve this problem by adding “optional dependencies” for each
 of the additional capabilities. We do this by adding a new
 <code>[project.optional-dependencies]</code> section with entries for
-the CLI and GUI:</p>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">[project]</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a>    <span class="st">"tqdm"</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="op">]</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="kw">[project.optional-dependencies]</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a>    <span class="st">"click"</span><span class="op">,</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a>    <span class="st">"rich-pixels"</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="op">]</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span></code></pre>
+the CLI and GUI.</p>
+<div id="add-optional-dependencies" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<p>(Note that there is nothing special about the names “gui” and
-“cli”).</p>
-<p>With this structure, if we use:</p>
+<span class="callout-header">Challenge</span>
+<div id="add-optional-dependencies" class="callout-inner">
+<h3 class="callout-title">Add Optional Dependencies</h3>
+<div class="callout-content">
+<p>Add a new <code>[project.optional-dependencies]</code> section with
+sections for <code>cli</code>, which depends on <code>click</code>,
+<code>rich</code>, and <code>rich-pixels</code>; and <code>gui</code>
+which depends on <code>toga</code>. Note that there is nothing special
+about the names “gui” and “cli”; you can use any name you like.</p>
+<p>Remove those packages from the main</p>
+<p>Test your solution by running:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre>
+</div>
+<p>to only install the core dependencies for the library.</p>
+<p>Test installing the GUI dependencies with:</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">pip</span> install <span class="at">-e</span> <span class="st">".[gui]"</span></span></code></pre>
 </div>
-<p>it will only install the core dependencies for the library. If we
-want to install the GUI we would have to explicitly add it:</p>
+<p>Test installing both the GUI and CLI dependencies with:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">pip</span> install <span class="at">-e</span> <span class="st">".[gui]"</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">pip</span> install <span class="at">-e</span> <span class="st">".[gui,cli]"</span></span></code></pre>
 </div>
-<p>and if we wanted both GUI and CLI we would need:</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>The <code>[project]</code> and
+<code>[project.optional-dependencies]</code> should look something like
+this.</p>
 <div class="codewrapper sourceCode" id="cb13">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="ex">pip</span> install <span class="at">-e</span> <span class="st">".[gui,cli]"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="kw">[project]</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-[your-name]"</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a>    <span class="st">"tqdm"</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1" aria-label="code-block-13-11"></a><span class="op">]</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1" aria-label="code-block-13-12"></a></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1" aria-label="code-block-13-13"></a><span class="kw">[project.optional-dependencies]</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1" aria-label="code-block-13-14"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1" aria-label="code-block-13-15"></a>    <span class="st">"click"</span><span class="op">,</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1" aria-label="code-block-13-16"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1" aria-label="code-block-13-17"></a>    <span class="st">"rich-pixels"</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1" aria-label="code-block-13-18"></a><span class="op">]</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1" aria-label="code-block-13-19"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section level3">
@@ -511,124 +602,267 @@ quality. We could (and some projects do) add an additional optional
 dependency section (frequently called “dev”) with these
 dependencies.</p>
 <p>These tools don’t need to have the project code installed to work,
-and so in these cases you can instead use “dependency groups”:</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="kw">[dependency-groups]</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>    <span class="st">"black"</span><span class="op">,</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>    <span class="st">"flake8"</span><span class="op">,</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="st">"isort"</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a><span class="op">]</span></span></code></pre>
+and so in these cases you can instead use “dependency groups”.</p>
+<div id="challenge3" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<p>These can now be installed using:</p>
-<div class="codewrapper sourceCode" id="cb15">
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Add a new <code>[dependency-groups]</code> section with a dependency
+group called <code>dev</code> that includes <code>black</code>,
+<code>flake8</code>, <code>isort</code> and <code>build</code>.</p>
+<p>Test that these can now be installed using:</p>
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="ex">pip</span> install <span class="at">--group</span> dev</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">pip</span> install <span class="at">--group</span> dev</span></code></pre>
 </div>
-<p>so they can be run without having to install the project itself.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>Your new section should look something like:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="kw">[dependency-groups]</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a>    <span class="st">"black"</span><span class="op">,</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>    <span class="st">"flake8"</span><span class="op">,</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>    <span class="st">"isort"</span><span class="op">,</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    <span class="st">"build"</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a><span class="op">]</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="adding-tool-configuration">Adding Tool Configuration<a class="anchor" aria-label="anchor" href="#adding-tool-configuration"></a></h3>
+<p>Most code quality tools have options which can be configured. This
+can be done through command-line options, but usually you want the same
+options every time you run the tools in a project. In this case the
+tools often have a configuration file format that they can use to store
+these commonly-used configuration options. However most of them also
+support getting their configuration from the <code>tool</code> section
+of a <code>pyproject.toml</code> file.</p>
+<div id="converting-isort-configuration" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="converting-isort-configuration" class="callout-inner">
+<h3 class="callout-title">Converting <code>isort</code>
+configuration</h3>
+<div class="callout-content">
+<p>Our project currently has an <code>.isort.cfg</code> file which looks
+like this:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="kw">[settings]</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="dt">profile </span><span class="ot">=</span><span class="st"> black</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a><span class="dt">line_length </span><span class="ot">=</span><span class="st"> </span><span class="dv">88</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a><span class="dt">order_by_type </span><span class="ot">=</span><span class="st"> </span><span class="kw">false</span></span></code></pre>
+</div>
+<p>We can move this to a <code>[tool.isort]</code> section inside the
+<code>pyproject.toml</code>:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="kw">[tool.isort]</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a><span class="dt">profile</span> <span class="op">=</span> <span class="st">"black"</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a><span class="dt">line_length</span> <span class="op">=</span> <span class="dv">88</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a><span class="dt">order_by_type</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre>
+</div>
+<p>and then remove the <code>.isort.cfg</code>:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="fu">git</span> rm .isort.cfg</span></code></pre>
+</div>
+<p>Verify it works by running:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="ex">isort</span> <span class="at">--check</span> .</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Unfortunately <code>flake8</code> doesn’t currently support this sort
+of usage of <code>pyproject.toml</code> yet. We can simply use
+<code>pip install -e .</code> to install the package <em>and</em> the
+dependencies for testing and other CI tasks.</p>
+<p>Doing this means that if we update or change the dependencies in the
+future, we don’t need to update the GitHub Action - it will install the
+updated dependencies automatically.</p>
 </div>
 <div class="section level3">
 <h3 id="updating-ci">Updating CI<a class="anchor" aria-label="anchor" href="#updating-ci"></a></h3>
+<p>Having a <code>pyproject.toml</code> simplifies installation of the
+package for developers and users; but also simplifies your continuous
+integration.</p>
+<div id="challenge4" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
 <p>The project has a GitHub Action for running tests. As currently
 written it just installs every dependency by name. We can now update it
-to install using the <code>pyproject.toml</code>. We can change the line
+to install using the <code>pyproject.toml</code>.</p>
+<p>We can change the line
 <code>pip install numpy pillow torch 'torchvision &gt;= 0.13' tqdm</code>
 to simply <code>pip install -e .</code>, and the line
 <code>pip install black flake8 isort</code> to
 <code>pip install --group dev</code>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div class="accordion-body">
 <p>The updated action looks like this:</p>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Unit Tests</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="fu">on</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">push</span><span class="kw">]</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a><span class="at">    </span><span class="fu">strategy</span><span class="kw">:</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a><span class="at">      </span><span class="fu">matrix</span><span class="kw">:</span></span>
-<span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a><span class="at">        </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"3.13"</span><span class="kw">,</span><span class="at"> </span><span class="st">"3.14"</span><span class="kw">]</span></span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1" aria-label="code-block-16-10"></a><span class="at">        </span><span class="fu">os</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"ubuntu-latest"</span><span class="kw">,</span><span class="at"> </span><span class="st">"macos-latest"</span><span class="kw">,</span><span class="at"> </span><span class="st">"windows-latest"</span><span class="kw">]</span></span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1" aria-label="code-block-16-11"></a></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1" aria-label="code-block-16-12"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ${{ matrix.os }}</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1" aria-label="code-block-16-13"></a></span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1" aria-label="code-block-16-14"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb16-15"><a href="#cb16-15" tabindex="-1" aria-label="code-block-16-15"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v7</span></span>
-<span id="cb16-16"><a href="#cb16-16" tabindex="-1" aria-label="code-block-16-16"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python ${{ matrix.python-version }}</span></span>
-<span id="cb16-17"><a href="#cb16-17" tabindex="-1" aria-label="code-block-16-17"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v6</span></span>
-<span id="cb16-18"><a href="#cb16-18" tabindex="-1" aria-label="code-block-16-18"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb16-19"><a href="#cb16-19" tabindex="-1" aria-label="code-block-16-19"></a><span class="at">          </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> ${{ matrix.python-version }}</span></span>
-<span id="cb16-20"><a href="#cb16-20" tabindex="-1" aria-label="code-block-16-20"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
-<span id="cb16-21"><a href="#cb16-21" tabindex="-1" aria-label="code-block-16-21"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb16-22"><a href="#cb16-22" tabindex="-1" aria-label="code-block-16-22"></a>           pip install -U pip</span>
-<span id="cb16-23"><a href="#cb16-23" tabindex="-1" aria-label="code-block-16-23"></a>           pip install -e .</span>
-<span id="cb16-24"><a href="#cb16-24" tabindex="-1" aria-label="code-block-16-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run tests</span></span>
-<span id="cb16-25"><a href="#cb16-25" tabindex="-1" aria-label="code-block-16-25"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb16-26"><a href="#cb16-26" tabindex="-1" aria-label="code-block-16-26"></a>          python -m unittest discover -v tests</span>
-<span id="cb16-27"><a href="#cb16-27" tabindex="-1" aria-label="code-block-16-27"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check style</span></span>
-<span id="cb16-28"><a href="#cb16-28" tabindex="-1" aria-label="code-block-16-28"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb16-29"><a href="#cb16-29" tabindex="-1" aria-label="code-block-16-29"></a>          pip install --group dev</span>
-<span id="cb16-30"><a href="#cb16-30" tabindex="-1" aria-label="code-block-16-30"></a>          isort --check .</span>
-<span id="cb16-31"><a href="#cb16-31" tabindex="-1" aria-label="code-block-16-31"></a>          black --check .</span>
-<span id="cb16-32"><a href="#cb16-32" tabindex="-1" aria-label="code-block-16-32"></a>          flake8 image_classifiers tests</span></code></pre>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Run Unit Tests</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a><span class="fu">on</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">push</span><span class="kw">]</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1" aria-label="code-block-20-4"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1" aria-label="code-block-20-5"></a><span class="at">  </span><span class="fu">tests</span><span class="kw">:</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1" aria-label="code-block-20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1" aria-label="code-block-20-7"></a><span class="at">    </span><span class="fu">strategy</span><span class="kw">:</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1" aria-label="code-block-20-8"></a><span class="at">      </span><span class="fu">matrix</span><span class="kw">:</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1" aria-label="code-block-20-9"></a><span class="at">        </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"3.13"</span><span class="kw">,</span><span class="at"> </span><span class="st">"3.14"</span><span class="kw">]</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1" aria-label="code-block-20-10"></a><span class="at">        </span><span class="fu">os</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"ubuntu-latest"</span><span class="kw">,</span><span class="at"> </span><span class="st">"macos-latest"</span><span class="kw">,</span><span class="at"> </span><span class="st">"windows-latest"</span><span class="kw">]</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1" aria-label="code-block-20-11"></a></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1" aria-label="code-block-20-12"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ${{ matrix.os }}</span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1" aria-label="code-block-20-13"></a></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1" aria-label="code-block-20-14"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1" aria-label="code-block-20-15"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v7</span></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1" aria-label="code-block-20-16"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python ${{ matrix.python-version }}</span></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1" aria-label="code-block-20-17"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v6</span></span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1" aria-label="code-block-20-18"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1" aria-label="code-block-20-19"></a><span class="at">          </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> ${{ matrix.python-version }}</span></span>
+<span id="cb20-20"><a href="#cb20-20" tabindex="-1" aria-label="code-block-20-20"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
+<span id="cb20-21"><a href="#cb20-21" tabindex="-1" aria-label="code-block-20-21"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb20-22"><a href="#cb20-22" tabindex="-1" aria-label="code-block-20-22"></a>           pip install -U pip</span>
+<span id="cb20-23"><a href="#cb20-23" tabindex="-1" aria-label="code-block-20-23"></a>           pip install -e .</span>
+<span id="cb20-24"><a href="#cb20-24" tabindex="-1" aria-label="code-block-20-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run tests</span></span>
+<span id="cb20-25"><a href="#cb20-25" tabindex="-1" aria-label="code-block-20-25"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb20-26"><a href="#cb20-26" tabindex="-1" aria-label="code-block-20-26"></a>          python -m unittest discover -v tests</span>
+<span id="cb20-27"><a href="#cb20-27" tabindex="-1" aria-label="code-block-20-27"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check style</span></span>
+<span id="cb20-28"><a href="#cb20-28" tabindex="-1" aria-label="code-block-20-28"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb20-29"><a href="#cb20-29" tabindex="-1" aria-label="code-block-20-29"></a>          pip install --group dev</span>
+<span id="cb20-30"><a href="#cb20-30" tabindex="-1" aria-label="code-block-20-30"></a>          isort --check .</span>
+<span id="cb20-31"><a href="#cb20-31" tabindex="-1" aria-label="code-block-20-31"></a>          black --check .</span>
+<span id="cb20-32"><a href="#cb20-32" tabindex="-1" aria-label="code-block-20-32"></a>          flake8 image_classifiers tests</span></code></pre>
 </div>
-<p>Doing this means that if we update or change the dependencies in the
-future, we don’t need to update the GitHub Action - it will install the
-updated dependencies automatically.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="scripts">Scripts<a class="anchor" aria-label="anchor" href="#scripts"></a></h3>
 <p>Right now if we want to run the CLI tool or GUI app we need to run it
 using <code>python -m</code> to run the module as the main script. The
 <code>pyproject.toml</code> provides a way to let Python know that
-certain code is meant to be run as a command-line script.</p>
-<p>You can add a <code>[project.scripts]</code> section which lists
-command-line scripts:</p>
-<div class="codewrapper sourceCode" id="cb17">
+certain code is meant to be run as a command-line script through the
+<code>[project.scripts]</code> and <code>[project.gui-scripts]</code>
+sections. These are effectively the same, except on Windows where</p>
+<p>For example you can add a <code>[project.scripts]</code> section
+which lists command-line scripts:</p>
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="kw">[project.scripts]</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a><span class="dt">image-classifier-cli</span> <span class="op">=</span> <span class="st">"image_classifiers.cli:predict"</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="kw">[project.scripts]</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1" aria-label="code-block-21-2"></a><span class="dt">image-classifier-cli</span> <span class="op">=</span> <span class="st">"image_classifiers.cli:predict"</span></span></code></pre>
 </div>
 <p>The key on the left is the name of the command that will be added,
 and the right consists of the name of the module and function that will
 be run. It is equivalent to:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="im">from</span> image_classifiers.cli <span class="im">import</span> predict</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a>predict()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="im">from</span> image_classifiers.cli <span class="im">import</span> predict</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1" aria-label="code-block-22-2"></a>predict()</span></code></pre>
 </div>
-<p>For GUIs you need to instead use:</p>
-<div class="codewrapper sourceCode" id="cb19">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="kw">[project.gui-scripts]</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a><span class="dt">image-classifier-gui</span> <span class="op">=</span> <span class="st">"image_classifiers.gui:main"</span></span></code></pre>
-</div>
-<p>This distinction only matters on Windows, otherwise the two are
-equivalent.</p>
 <p>Once you have done this (and re-run
 <code>pip install -e ".[gui,cli]"</code>) you should be able to use the
-new commands in your shell. For example, to run the CLI:</p>
-<div class="codewrapper sourceCode" id="cb20">
+new commands in your shell. For example:</p>
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">image-classifier-cli</span> tests/data/<span class="pp">*</span>.jpg</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="ex">image-classifier-cli</span> tests/data/<span class="pp">*</span>.jpg</span></code></pre>
+</div>
+<div id="add-a-gui-script" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="add-a-gui-script" class="callout-inner">
+<h3 class="callout-title">Add a GUI script</h3>
+<div class="callout-content">
+<p>The GUI script is located in the module
+<code>image_classifiers.gui</code> and uses the <code>main</code>
+function in that module.</p>
+<p>Add a <code>[project.gui-scripts]</code> section to your
+<code>pyproject.toml</code> that adds an
+<code>image-classifier-gui</code> command.</p>
+<p>Test that your new command works by re-running
+<code>pip install -e ".[gui,cli]"</code> and then running:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="ex">image-classifier-gui</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution5" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
+  <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
+</button>
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div class="accordion-body">
+<p>Your <code>project.gui-scripts</code> section should now look like
+this:</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="kw">[project.gui-scripts]</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1" aria-label="code-block-25-2"></a><span class="dt">image-classifier-gui</span> <span class="op">=</span> <span class="st">"image_classifiers.gui:main"</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
-  “Flat” vs. “src” Project Layout
-  </h3>
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> “Flat” vs. “src” Project Layout </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>The code in the example is currently in what is sometimes called
 “flat layout”: the Python packages defined in the project
@@ -651,11 +885,11 @@ have two versions of a module in memory!</p>
 <p>For this reason it’s a good idea once you have added a
 <code>pyproject.toml</code> and any <code>project.scripts</code>, to
 migrate to “src layout”. This is usually pretty easy:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="fu">mkdir</span> src</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1" aria-label="code-block-21-2"></a><span class="fu">git</span> mv image_classifiers src</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="fu">mkdir</span> src</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="fu">git</span> mv image_classifiers src</span></code></pre>
 </div>
 <p>If you use the <code>hatchling</code> build system, it requires “src
 layout”.</p>
@@ -668,167 +902,154 @@ layout”.</p>
 <h3 id="adding-project-metadata">Adding Project Metadata<a class="anchor" aria-label="anchor" href="#adding-project-metadata"></a></h3>
 <p>After you have set up the information about the code and
 dependencies, generally you will want to add a lot more metadata about
-your project. For example you might add the following to the
-<code>[project]</code> section (updating the authors and maintainers
-sections appropriately):</p>
-<div class="codewrapper sourceCode" id="cb22">
+your project. This metadata is primarily used by package repositories
+like PyPI to help classify your package and help search tools and users
+discover whether your project matches their needs.</p>
+<p>For example you might add the following to the <code>[project]</code>
+section (updating the authors and maintainers sections
+appropriately):</p>
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1" aria-label="code-block-22-2"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1" aria-label="code-block-22-3"></a><span class="op">]</span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1" aria-label="code-block-22-4"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1" aria-label="code-block-22-5"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1" aria-label="code-block-22-6"></a><span class="op">]</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1" aria-label="code-block-22-7"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project that makes Torchvision classifiers available for inference."</span></span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1" aria-label="code-block-22-8"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1" aria-label="code-block-22-9"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1" aria-label="code-block-22-10"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E*"</span><span class="op">]</span></span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1" aria-label="code-block-22-11"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"image classification"</span><span class="op">,</span> <span class="st">"deep learning"</span><span class="op">,</span> <span class="st">"neural networks"</span><span class="op">,</span> <span class="st">"pytorch"</span><span class="op">,</span> <span class="st">"torchvision"</span><span class="op">]</span></span>
-<span id="cb22-12"><a href="#cb22-12" tabindex="-1" aria-label="code-block-22-12"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb22-13"><a href="#cb22-13" tabindex="-1" aria-label="code-block-22-13"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
-<span id="cb22-14"><a href="#cb22-14" tabindex="-1" aria-label="code-block-22-14"></a>  <span class="st">"Programming Language :: Python"</span><span class="op">,</span></span>
-<span id="cb22-15"><a href="#cb22-15" tabindex="-1" aria-label="code-block-22-15"></a>  <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
-<span id="cb22-16"><a href="#cb22-16" tabindex="-1" aria-label="code-block-22-16"></a>  <span class="st">"Operating System :: MacOS :: MacOS X"</span><span class="op">,</span></span>
-<span id="cb22-17"><a href="#cb22-17" tabindex="-1" aria-label="code-block-22-17"></a>  <span class="st">"Operating System :: Windows"</span><span class="op">,</span></span>
-<span id="cb22-18"><a href="#cb22-18" tabindex="-1" aria-label="code-block-22-18"></a>  <span class="st">"Operating System :: POSIX :: Linux"</span><span class="op">,</span></span>
-<span id="cb22-19"><a href="#cb22-19" tabindex="-1" aria-label="code-block-22-19"></a>  <span class="st">"Topic :: Education"</span><span class="op">,</span></span>
-<span id="cb22-20"><a href="#cb22-20" tabindex="-1" aria-label="code-block-22-20"></a>  <span class="st">"Topic :: Scientific/Engineering :: Artificial Intelligence"</span><span class="op">,</span></span>
-<span id="cb22-21"><a href="#cb22-21" tabindex="-1" aria-label="code-block-22-21"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Processing"</span><span class="op">,</span></span>
-<span id="cb22-22"><a href="#cb22-22" tabindex="-1" aria-label="code-block-22-22"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Recognition"</span><span class="op">,</span></span>
-<span id="cb22-23"><a href="#cb22-23" tabindex="-1" aria-label="code-block-22-23"></a>  <span class="st">"Topic :: Software Development :: Libraries :: Python Modules"</span><span class="op">,</span></span>
-<span id="cb22-24"><a href="#cb22-24" tabindex="-1" aria-label="code-block-22-24"></a>  <span class="st">"Topic :: System :: Archiving :: Packaging"</span></span>
-<span id="cb22-25"><a href="#cb22-25" tabindex="-1" aria-label="code-block-22-25"></a><span class="op">]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1" aria-label="code-block-27-2"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1" aria-label="code-block-27-3"></a><span class="op">]</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1" aria-label="code-block-27-4"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1" aria-label="code-block-27-5"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1" aria-label="code-block-27-6"></a><span class="op">]</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1" aria-label="code-block-27-7"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project that makes Torchvision classifiers available for inference."</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1" aria-label="code-block-27-8"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1" aria-label="code-block-27-9"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1" aria-label="code-block-27-10"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E*"</span><span class="op">]</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1" aria-label="code-block-27-11"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"image classification"</span><span class="op">,</span> <span class="st">"deep learning"</span><span class="op">,</span> <span class="st">"neural networks"</span><span class="op">,</span> <span class="st">"pytorch"</span><span class="op">,</span> <span class="st">"torchvision"</span><span class="op">]</span></span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1" aria-label="code-block-27-12"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1" aria-label="code-block-27-13"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1" aria-label="code-block-27-14"></a>  <span class="st">"Programming Language :: Python"</span><span class="op">,</span></span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1" aria-label="code-block-27-15"></a>  <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1" aria-label="code-block-27-16"></a>  <span class="st">"Operating System :: MacOS :: MacOS X"</span><span class="op">,</span></span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1" aria-label="code-block-27-17"></a>  <span class="st">"Operating System :: Windows"</span><span class="op">,</span></span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1" aria-label="code-block-27-18"></a>  <span class="st">"Operating System :: POSIX :: Linux"</span><span class="op">,</span></span>
+<span id="cb27-19"><a href="#cb27-19" tabindex="-1" aria-label="code-block-27-19"></a>  <span class="st">"Topic :: Education"</span><span class="op">,</span></span>
+<span id="cb27-20"><a href="#cb27-20" tabindex="-1" aria-label="code-block-27-20"></a>  <span class="st">"Topic :: Scientific/Engineering :: Artificial Intelligence"</span><span class="op">,</span></span>
+<span id="cb27-21"><a href="#cb27-21" tabindex="-1" aria-label="code-block-27-21"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Processing"</span><span class="op">,</span></span>
+<span id="cb27-22"><a href="#cb27-22" tabindex="-1" aria-label="code-block-27-22"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Recognition"</span><span class="op">,</span></span>
+<span id="cb27-23"><a href="#cb27-23" tabindex="-1" aria-label="code-block-27-23"></a>  <span class="st">"Topic :: Software Development :: Libraries :: Python Modules"</span><span class="op">,</span></span>
+<span id="cb27-24"><a href="#cb27-24" tabindex="-1" aria-label="code-block-27-24"></a>  <span class="st">"Topic :: System :: Archiving :: Packaging"</span></span>
+<span id="cb27-25"><a href="#cb27-25" tabindex="-1" aria-label="code-block-27-25"></a><span class="op">]</span></span></code></pre>
 </div>
-</div>
-<div class="section level3">
-<h3 id="adding-tool-configuration">Adding Tool Configuration<a class="anchor" aria-label="anchor" href="#adding-tool-configuration"></a></h3>
-<p>Most code quality tools have options which can be configured. This
-can be done through command-line options, but usually you want the same
-options every time you run the tools in a project. In this case the
-tools often have a configuration file format that they can use to store
-these commonly-used configuration options.</p>
-<p>For most of these tools, this can be inside the
-<code>pyproject.toml</code> file itself. For example our project
-currently has an <code>.isort.cfg</code> file which looks like this:</p>
-<div class="codewrapper sourceCode" id="cb23">
-<h3 class="code-label">INI<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode ini" tabindex="0"><code class="sourceCode ini"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="kw">[settings]</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1" aria-label="code-block-23-2"></a><span class="dt">profile </span><span class="ot">=</span><span class="st"> black</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1" aria-label="code-block-23-3"></a><span class="dt">line_length </span><span class="ot">=</span><span class="st"> </span><span class="dv">88</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1" aria-label="code-block-23-4"></a><span class="dt">order_by_type </span><span class="ot">=</span><span class="st"> </span><span class="kw">false</span></span></code></pre>
-</div>
-<p>We can move this to a <code>[tool.isort]</code> section inside the
-<code>pyproject.toml</code>:</p>
-<div class="codewrapper sourceCode" id="cb24">
-<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="kw">[tool.isort]</span></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1" aria-label="code-block-24-2"></a><span class="dt">profile</span> <span class="op">=</span> <span class="st">"black"</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1" aria-label="code-block-24-3"></a><span class="dt">line_length</span> <span class="op">=</span> <span class="dv">88</span></span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1" aria-label="code-block-24-4"></a><span class="dt">order_by_type</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre>
-</div>
-<p>and then remove the <code>.isort.cfg</code>:</p>
-<div class="codewrapper sourceCode" id="cb25">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" tabindex="-1" aria-label="code-block-25-1"></a><span class="fu">git</span> rm .isort.cfg</span></code></pre>
-</div>
-<p>Unfortunately <code>flake8</code> doesn’t currently support this sort
-of usage of <code>pyproject.toml</code> yet.</p>
 </div>
 <div class="section level3">
 <h3 id="the-complete-pyproject-toml">The Complete <code>pyproject.toml</code>
 <a class="anchor" aria-label="anchor" href="#the-complete-pyproject-toml"></a></h3>
 <p>After all of this, your <code>pyproject.toml</code> should look like
 this:</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb26-1"><a href="#cb26-1" tabindex="-1" aria-label="code-block-26-1"></a><span class="kw">[build-system]</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1" aria-label="code-block-26-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 77.0.3"</span><span class="op">,</span> <span class="st">"setuptools-scm"</span><span class="op">]</span></span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1" aria-label="code-block-26-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1" aria-label="code-block-26-4"></a></span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1" aria-label="code-block-26-5"></a><span class="kw">[project]</span></span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1" aria-label="code-block-26-6"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-corran"</span></span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1" aria-label="code-block-26-7"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
-<span id="cb26-8"><a href="#cb26-8" tabindex="-1" aria-label="code-block-26-8"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
-<span id="cb26-9"><a href="#cb26-9" tabindex="-1" aria-label="code-block-26-9"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-10"><a href="#cb26-10" tabindex="-1" aria-label="code-block-26-10"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
-<span id="cb26-11"><a href="#cb26-11" tabindex="-1" aria-label="code-block-26-11"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
-<span id="cb26-12"><a href="#cb26-12" tabindex="-1" aria-label="code-block-26-12"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
-<span id="cb26-13"><a href="#cb26-13" tabindex="-1" aria-label="code-block-26-13"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
-<span id="cb26-14"><a href="#cb26-14" tabindex="-1" aria-label="code-block-26-14"></a>    <span class="st">"tqdm"</span></span>
-<span id="cb26-15"><a href="#cb26-15" tabindex="-1" aria-label="code-block-26-15"></a><span class="op">]</span></span>
-<span id="cb26-16"><a href="#cb26-16" tabindex="-1" aria-label="code-block-26-16"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-17"><a href="#cb26-17" tabindex="-1" aria-label="code-block-26-17"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
-<span id="cb26-18"><a href="#cb26-18" tabindex="-1" aria-label="code-block-26-18"></a><span class="op">]</span></span>
-<span id="cb26-19"><a href="#cb26-19" tabindex="-1" aria-label="code-block-26-19"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-20"><a href="#cb26-20" tabindex="-1" aria-label="code-block-26-20"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
-<span id="cb26-21"><a href="#cb26-21" tabindex="-1" aria-label="code-block-26-21"></a><span class="op">]</span></span>
-<span id="cb26-22"><a href="#cb26-22" tabindex="-1" aria-label="code-block-26-22"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project that makes Torchvision classifiers available for inference."</span></span>
-<span id="cb26-23"><a href="#cb26-23" tabindex="-1" aria-label="code-block-26-23"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
-<span id="cb26-24"><a href="#cb26-24" tabindex="-1" aria-label="code-block-26-24"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
-<span id="cb26-25"><a href="#cb26-25" tabindex="-1" aria-label="code-block-26-25"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E*"</span><span class="op">]</span></span>
-<span id="cb26-26"><a href="#cb26-26" tabindex="-1" aria-label="code-block-26-26"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"image classification"</span><span class="op">,</span> <span class="st">"deep learning"</span><span class="op">,</span> <span class="st">"neural networks"</span><span class="op">,</span> <span class="st">"pytorch"</span><span class="op">,</span> <span class="st">"torchvision"</span><span class="op">]</span></span>
-<span id="cb26-27"><a href="#cb26-27" tabindex="-1" aria-label="code-block-26-27"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-28"><a href="#cb26-28" tabindex="-1" aria-label="code-block-26-28"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
-<span id="cb26-29"><a href="#cb26-29" tabindex="-1" aria-label="code-block-26-29"></a>  <span class="st">"Programming Language :: Python"</span><span class="op">,</span></span>
-<span id="cb26-30"><a href="#cb26-30" tabindex="-1" aria-label="code-block-26-30"></a>  <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
-<span id="cb26-31"><a href="#cb26-31" tabindex="-1" aria-label="code-block-26-31"></a>  <span class="st">"Operating System :: MacOS :: MacOS X"</span><span class="op">,</span></span>
-<span id="cb26-32"><a href="#cb26-32" tabindex="-1" aria-label="code-block-26-32"></a>  <span class="st">"Operating System :: Microsoft :: Windows"</span><span class="op">,</span></span>
-<span id="cb26-33"><a href="#cb26-33" tabindex="-1" aria-label="code-block-26-33"></a>  <span class="st">"Operating System :: POSIX :: Linux"</span><span class="op">,</span></span>
-<span id="cb26-34"><a href="#cb26-34" tabindex="-1" aria-label="code-block-26-34"></a>  <span class="st">"Topic :: Education"</span><span class="op">,</span></span>
-<span id="cb26-35"><a href="#cb26-35" tabindex="-1" aria-label="code-block-26-35"></a>  <span class="st">"Topic :: Scientific/Engineering :: Artificial Intelligence"</span><span class="op">,</span></span>
-<span id="cb26-36"><a href="#cb26-36" tabindex="-1" aria-label="code-block-26-36"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Processing"</span><span class="op">,</span></span>
-<span id="cb26-37"><a href="#cb26-37" tabindex="-1" aria-label="code-block-26-37"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Recognition"</span><span class="op">,</span></span>
-<span id="cb26-38"><a href="#cb26-38" tabindex="-1" aria-label="code-block-26-38"></a>  <span class="st">"Topic :: Software Development :: Libraries :: Python Modules"</span><span class="op">,</span></span>
-<span id="cb26-39"><a href="#cb26-39" tabindex="-1" aria-label="code-block-26-39"></a>  <span class="st">"Topic :: System :: Archiving :: Packaging"</span></span>
-<span id="cb26-40"><a href="#cb26-40" tabindex="-1" aria-label="code-block-26-40"></a><span class="op">]</span></span>
-<span id="cb26-41"><a href="#cb26-41" tabindex="-1" aria-label="code-block-26-41"></a></span>
-<span id="cb26-42"><a href="#cb26-42" tabindex="-1" aria-label="code-block-26-42"></a><span class="kw">[project.optional-dependencies]</span></span>
-<span id="cb26-43"><a href="#cb26-43" tabindex="-1" aria-label="code-block-26-43"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-44"><a href="#cb26-44" tabindex="-1" aria-label="code-block-26-44"></a>    <span class="st">"click"</span><span class="op">,</span></span>
-<span id="cb26-45"><a href="#cb26-45" tabindex="-1" aria-label="code-block-26-45"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
-<span id="cb26-46"><a href="#cb26-46" tabindex="-1" aria-label="code-block-26-46"></a>    <span class="st">"rich-pixels"</span></span>
-<span id="cb26-47"><a href="#cb26-47" tabindex="-1" aria-label="code-block-26-47"></a><span class="op">]</span></span>
-<span id="cb26-48"><a href="#cb26-48" tabindex="-1" aria-label="code-block-26-48"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span>
-<span id="cb26-49"><a href="#cb26-49" tabindex="-1" aria-label="code-block-26-49"></a></span>
-<span id="cb26-50"><a href="#cb26-50" tabindex="-1" aria-label="code-block-26-50"></a><span class="kw">[dependency-groups]</span></span>
-<span id="cb26-51"><a href="#cb26-51" tabindex="-1" aria-label="code-block-26-51"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
-<span id="cb26-52"><a href="#cb26-52" tabindex="-1" aria-label="code-block-26-52"></a>    <span class="st">"black"</span><span class="op">,</span></span>
-<span id="cb26-53"><a href="#cb26-53" tabindex="-1" aria-label="code-block-26-53"></a>    <span class="st">"flake8"</span><span class="op">,</span></span>
-<span id="cb26-54"><a href="#cb26-54" tabindex="-1" aria-label="code-block-26-54"></a>    <span class="st">"isort"</span></span>
-<span id="cb26-55"><a href="#cb26-55" tabindex="-1" aria-label="code-block-26-55"></a><span class="op">]</span></span>
-<span id="cb26-56"><a href="#cb26-56" tabindex="-1" aria-label="code-block-26-56"></a></span>
-<span id="cb26-57"><a href="#cb26-57" tabindex="-1" aria-label="code-block-26-57"></a><span class="kw">[project.scripts]</span></span>
-<span id="cb26-58"><a href="#cb26-58" tabindex="-1" aria-label="code-block-26-58"></a><span class="dt">image-classifier-cli</span> <span class="op">=</span> <span class="st">"image_classifiers.cli:predict"</span></span>
-<span id="cb26-59"><a href="#cb26-59" tabindex="-1" aria-label="code-block-26-59"></a></span>
-<span id="cb26-60"><a href="#cb26-60" tabindex="-1" aria-label="code-block-26-60"></a><span class="kw">[project.gui-scripts]</span></span>
-<span id="cb26-61"><a href="#cb26-61" tabindex="-1" aria-label="code-block-26-61"></a><span class="dt">image-classifier-gui</span> <span class="op">=</span> <span class="st">"image_classifiers.gui:main"</span></span>
-<span id="cb26-62"><a href="#cb26-62" tabindex="-1" aria-label="code-block-26-62"></a></span>
-<span id="cb26-63"><a href="#cb26-63" tabindex="-1" aria-label="code-block-26-63"></a><span class="kw">[tool.isort]</span></span>
-<span id="cb26-64"><a href="#cb26-64" tabindex="-1" aria-label="code-block-26-64"></a><span class="dt">profile</span> <span class="op">=</span> <span class="st">"black"</span></span>
-<span id="cb26-65"><a href="#cb26-65" tabindex="-1" aria-label="code-block-26-65"></a><span class="dt">line_length</span> <span class="op">=</span> <span class="dv">88</span></span>
-<span id="cb26-66"><a href="#cb26-66" tabindex="-1" aria-label="code-block-26-66"></a><span class="dt">order_by_type</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="kw">[build-system]</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1" aria-label="code-block-28-2"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"setuptools &gt;= 77.0.3"</span><span class="op">,</span> <span class="st">"setuptools-scm"</span><span class="op">]</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1" aria-label="code-block-28-3"></a><span class="dt">build-backend</span> <span class="op">=</span> <span class="st">"setuptools.build_meta"</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1" aria-label="code-block-28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1" aria-label="code-block-28-5"></a><span class="kw">[project]</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1" aria-label="code-block-28-6"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"packaging-project-corran"</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1" aria-label="code-block-28-7"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.0.1"</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1" aria-label="code-block-28-8"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1" aria-label="code-block-28-9"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1" aria-label="code-block-28-10"></a>    <span class="st">"numpy"</span><span class="op">,</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1" aria-label="code-block-28-11"></a>    <span class="st">"pillow"</span><span class="op">,</span></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1" aria-label="code-block-28-12"></a>    <span class="st">"torch"</span><span class="op">,</span></span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1" aria-label="code-block-28-13"></a>    <span class="st">"torchvision &gt;= 0.13"</span><span class="op">,</span></span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1" aria-label="code-block-28-14"></a>    <span class="st">"tqdm"</span></span>
+<span id="cb28-15"><a href="#cb28-15" tabindex="-1" aria-label="code-block-28-15"></a><span class="op">]</span></span>
+<span id="cb28-16"><a href="#cb28-16" tabindex="-1" aria-label="code-block-28-16"></a><span class="dt">authors</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb28-17"><a href="#cb28-17" tabindex="-1" aria-label="code-block-28-17"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb28-18"><a href="#cb28-18" tabindex="-1" aria-label="code-block-28-18"></a><span class="op">]</span></span>
+<span id="cb28-19"><a href="#cb28-19" tabindex="-1" aria-label="code-block-28-19"></a><span class="dt">maintainers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb28-20"><a href="#cb28-20" tabindex="-1" aria-label="code-block-28-20"></a>  <span class="op">{</span><span class="dt">name</span><span class="op"> =</span> <span class="st">"Your Name"</span><span class="op">, </span><span class="dt">email</span><span class="op"> =</span> <span class="st">"your.email@soton.ac.uk"</span><span class="op">}</span></span>
+<span id="cb28-21"><a href="#cb28-21" tabindex="-1" aria-label="code-block-28-21"></a><span class="op">]</span></span>
+<span id="cb28-22"><a href="#cb28-22" tabindex="-1" aria-label="code-block-28-22"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"An example project that makes Torchvision classifiers available for inference."</span></span>
+<span id="cb28-23"><a href="#cb28-23" tabindex="-1" aria-label="code-block-28-23"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.rst"</span></span>
+<span id="cb28-24"><a href="#cb28-24" tabindex="-1" aria-label="code-block-28-24"></a><span class="dt">license</span> <span class="op">=</span> <span class="st">"MIT"</span></span>
+<span id="cb28-25"><a href="#cb28-25" tabindex="-1" aria-label="code-block-28-25"></a><span class="dt">license-files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"LICEN[CS]E*"</span><span class="op">]</span></span>
+<span id="cb28-26"><a href="#cb28-26" tabindex="-1" aria-label="code-block-28-26"></a><span class="dt">keywords</span> <span class="op">=</span> <span class="op">[</span><span class="st">"example"</span><span class="op">,</span> <span class="st">"image classification"</span><span class="op">,</span> <span class="st">"deep learning"</span><span class="op">,</span> <span class="st">"neural networks"</span><span class="op">,</span> <span class="st">"pytorch"</span><span class="op">,</span> <span class="st">"torchvision"</span><span class="op">]</span></span>
+<span id="cb28-27"><a href="#cb28-27" tabindex="-1" aria-label="code-block-28-27"></a><span class="dt">classifiers</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb28-28"><a href="#cb28-28" tabindex="-1" aria-label="code-block-28-28"></a>  <span class="st">"Development Status :: 4 - Beta"</span><span class="op">,</span></span>
+<span id="cb28-29"><a href="#cb28-29" tabindex="-1" aria-label="code-block-28-29"></a>  <span class="st">"Programming Language :: Python"</span><span class="op">,</span></span>
+<span id="cb28-30"><a href="#cb28-30" tabindex="-1" aria-label="code-block-28-30"></a>  <span class="st">"Natural Language :: English"</span><span class="op">,</span></span>
+<span id="cb28-31"><a href="#cb28-31" tabindex="-1" aria-label="code-block-28-31"></a>  <span class="st">"Operating System :: MacOS :: MacOS X"</span><span class="op">,</span></span>
+<span id="cb28-32"><a href="#cb28-32" tabindex="-1" aria-label="code-block-28-32"></a>  <span class="st">"Operating System :: Microsoft :: Windows"</span><span class="op">,</span></span>
+<span id="cb28-33"><a href="#cb28-33" tabindex="-1" aria-label="code-block-28-33"></a>  <span class="st">"Operating System :: POSIX :: Linux"</span><span class="op">,</span></span>
+<span id="cb28-34"><a href="#cb28-34" tabindex="-1" aria-label="code-block-28-34"></a>  <span class="st">"Topic :: Education"</span><span class="op">,</span></span>
+<span id="cb28-35"><a href="#cb28-35" tabindex="-1" aria-label="code-block-28-35"></a>  <span class="st">"Topic :: Scientific/Engineering :: Artificial Intelligence"</span><span class="op">,</span></span>
+<span id="cb28-36"><a href="#cb28-36" tabindex="-1" aria-label="code-block-28-36"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Processing"</span><span class="op">,</span></span>
+<span id="cb28-37"><a href="#cb28-37" tabindex="-1" aria-label="code-block-28-37"></a>  <span class="st">"Topic :: Scientific/Engineering :: Image Recognition"</span><span class="op">,</span></span>
+<span id="cb28-38"><a href="#cb28-38" tabindex="-1" aria-label="code-block-28-38"></a>  <span class="st">"Topic :: Software Development :: Libraries :: Python Modules"</span><span class="op">,</span></span>
+<span id="cb28-39"><a href="#cb28-39" tabindex="-1" aria-label="code-block-28-39"></a>  <span class="st">"Topic :: System :: Archiving :: Packaging"</span></span>
+<span id="cb28-40"><a href="#cb28-40" tabindex="-1" aria-label="code-block-28-40"></a><span class="op">]</span></span>
+<span id="cb28-41"><a href="#cb28-41" tabindex="-1" aria-label="code-block-28-41"></a></span>
+<span id="cb28-42"><a href="#cb28-42" tabindex="-1" aria-label="code-block-28-42"></a><span class="kw">[project.optional-dependencies]</span></span>
+<span id="cb28-43"><a href="#cb28-43" tabindex="-1" aria-label="code-block-28-43"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb28-44"><a href="#cb28-44" tabindex="-1" aria-label="code-block-28-44"></a>    <span class="st">"click"</span><span class="op">,</span></span>
+<span id="cb28-45"><a href="#cb28-45" tabindex="-1" aria-label="code-block-28-45"></a>    <span class="st">"rich"</span><span class="op">,</span></span>
+<span id="cb28-46"><a href="#cb28-46" tabindex="-1" aria-label="code-block-28-46"></a>    <span class="st">"rich-pixels"</span></span>
+<span id="cb28-47"><a href="#cb28-47" tabindex="-1" aria-label="code-block-28-47"></a><span class="op">]</span></span>
+<span id="cb28-48"><a href="#cb28-48" tabindex="-1" aria-label="code-block-28-48"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span>
+<span id="cb28-49"><a href="#cb28-49" tabindex="-1" aria-label="code-block-28-49"></a></span>
+<span id="cb28-50"><a href="#cb28-50" tabindex="-1" aria-label="code-block-28-50"></a><span class="kw">[dependency-groups]</span></span>
+<span id="cb28-51"><a href="#cb28-51" tabindex="-1" aria-label="code-block-28-51"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb28-52"><a href="#cb28-52" tabindex="-1" aria-label="code-block-28-52"></a>    <span class="st">"black"</span><span class="op">,</span></span>
+<span id="cb28-53"><a href="#cb28-53" tabindex="-1" aria-label="code-block-28-53"></a>    <span class="st">"flake8"</span><span class="op">,</span></span>
+<span id="cb28-54"><a href="#cb28-54" tabindex="-1" aria-label="code-block-28-54"></a>    <span class="st">"isort"</span><span class="op">,</span></span>
+<span id="cb28-55"><a href="#cb28-55" tabindex="-1" aria-label="code-block-28-55"></a>    <span class="st">"build"</span></span>
+<span id="cb28-56"><a href="#cb28-56" tabindex="-1" aria-label="code-block-28-56"></a><span class="op">]</span></span>
+<span id="cb28-57"><a href="#cb28-57" tabindex="-1" aria-label="code-block-28-57"></a></span>
+<span id="cb28-58"><a href="#cb28-58" tabindex="-1" aria-label="code-block-28-58"></a><span class="kw">[project.scripts]</span></span>
+<span id="cb28-59"><a href="#cb28-59" tabindex="-1" aria-label="code-block-28-59"></a><span class="dt">image-classifier-cli</span> <span class="op">=</span> <span class="st">"image_classifiers.cli:predict"</span></span>
+<span id="cb28-60"><a href="#cb28-60" tabindex="-1" aria-label="code-block-28-60"></a></span>
+<span id="cb28-61"><a href="#cb28-61" tabindex="-1" aria-label="code-block-28-61"></a><span class="kw">[project.gui-scripts]</span></span>
+<span id="cb28-62"><a href="#cb28-62" tabindex="-1" aria-label="code-block-28-62"></a><span class="dt">image-classifier-gui</span> <span class="op">=</span> <span class="st">"image_classifiers.gui:main"</span></span>
+<span id="cb28-63"><a href="#cb28-63" tabindex="-1" aria-label="code-block-28-63"></a></span>
+<span id="cb28-64"><a href="#cb28-64" tabindex="-1" aria-label="code-block-28-64"></a><span class="kw">[tool.isort]</span></span>
+<span id="cb28-65"><a href="#cb28-65" tabindex="-1" aria-label="code-block-28-65"></a><span class="dt">profile</span> <span class="op">=</span> <span class="st">"black"</span></span>
+<span id="cb28-66"><a href="#cb28-66" tabindex="-1" aria-label="code-block-28-66"></a><span class="dt">line_length</span> <span class="op">=</span> <span class="dv">88</span></span>
+<span id="cb28-67"><a href="#cb28-67" tabindex="-1" aria-label="code-block-28-67"></a><span class="dt">order_by_type</span> <span class="op">=</span> <span class="cn">false</span></span></code></pre>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="building-distributions">Building Distributions<a class="anchor" aria-label="anchor" href="#building-distributions"></a></h2>
-<p>We can now build source distributions and wheels easily. First
-install <code>build</code>:</p>
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" tabindex="-1" aria-label="code-block-27-1"></a><span class="ex">pip</span> install build</span></code></pre>
+<p>We saw in the lecture portion of the course that you can build
+distributions using the <code>build</code> command. This should have
+been installed as part of the <code>dev</code> dependency group.</p>
+<div id="build-the-project" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<p>And then run it:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<span class="callout-header">Challenge</span>
+<div id="build-the-project" class="callout-inner">
+<h3 class="callout-title">Build the project</h3>
+<div class="callout-content">
+<p>Build your package using <code>build</code>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution6" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
+  <h4 class="accordion-header" id="headingSolution6"> Show me the solution </h4>
+</button>
+<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div class="accordion-body">
+<p>Something like the following should build both “wheel” and “sdist”
+distributions:</p>
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" tabindex="-1" aria-label="code-block-28-1"></a><span class="ex">python</span> <span class="at">-m</span> build</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1" aria-label="code-block-29-1"></a><span class="ex">python</span> <span class="at">-m</span> build</span></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <p>You should now have a dist directory which contains a
 <code>.wheel</code> file and a <code>.tar.gz</code> source distribution.
@@ -850,41 +1071,54 @@ be able to give collaborators a simple installer or executable which
 allows them to run your scripts. There are a number of tools available
 that can do this. We’ll use the <code>briefcase</code> tool, because it
 has the best integration with OS code signing and app stores.</p>
+<div id="add-briefcase-configuration" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="add-briefcase-configuration" class="callout-inner">
+<h3 class="callout-title">Add Briefcase Configuration</h3>
+<div class="callout-content">
 <p>To use <code>briefcase</code> you first install it with pip:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" tabindex="-1" aria-label="code-block-29-1"></a><span class="ex">pip</span> install briefcase</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a><span class="ex">pip</span> install briefcase</span></code></pre>
 </div>
-<p>and then you add information about your application to the
-<code>pyproject.toml</code></p>
-<div class="codewrapper sourceCode" id="cb30">
+<p>You could add this to the <code>dev</code> dependency group in your
+<code>pyproject.toml</code> as well.</p>
+<p>Then you add information about your application to the
+<code>pyproject.toml</code>:</p>
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb30-1"><a href="#cb30-1" tabindex="-1" aria-label="code-block-30-1"></a><span class="kw">[tool.briefcase]</span></span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1" aria-label="code-block-30-2"></a><span class="dt">project_name</span> <span class="op">=</span> <span class="st">"Image Classifiers"</span></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1" aria-label="code-block-30-3"></a><span class="dt">bundle</span> <span class="op">=</span> <span class="st">"uk.ac.soton.example"</span></span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1" aria-label="code-block-30-4"></a><span class="dt">url</span> <span class="op">=</span> <span class="st">"https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging-example"</span></span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1" aria-label="code-block-30-5"></a></span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1" aria-label="code-block-30-6"></a><span class="kw">[tool.briefcase.app.image-classifiers]</span></span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1" aria-label="code-block-30-7"></a><span class="dt">formal_name</span> <span class="op">=</span> <span class="st">"Image Classifiers"</span></span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1" aria-label="code-block-30-8"></a><span class="dt">sources</span> <span class="op">=</span> <span class="op">[</span><span class="st">"image_classifiers"</span><span class="op">]</span></span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1" aria-label="code-block-30-9"></a><span class="dt">console_app</span> <span class="op">=</span> <span class="cn">false</span></span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1" aria-label="code-block-30-10"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1" aria-label="code-block-30-11"></a></span>
-<span id="cb30-12"><a href="#cb30-12" tabindex="-1" aria-label="code-block-30-12"></a><span class="kw">[tool.briefcase.app.image-classifiers.macOS]</span></span>
-<span id="cb30-13"><a href="#cb30-13" tabindex="-1" aria-label="code-block-30-13"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">'</span><span class="vs">std-nslog&gt;=1.0.0</span><span class="st">'</span><span class="op">]</span></span>
-<span id="cb30-14"><a href="#cb30-14" tabindex="-1" aria-label="code-block-30-14"></a><span class="co"># Recent Pytorch is not supported on Intel macs.</span></span>
-<span id="cb30-15"><a href="#cb30-15" tabindex="-1" aria-label="code-block-30-15"></a><span class="dt">universal_build</span> <span class="op">=</span> <span class="cn">false</span></span>
-<span id="cb30-16"><a href="#cb30-16" tabindex="-1" aria-label="code-block-30-16"></a><span class="co"># Make sure the app can use the camera.</span></span>
-<span id="cb30-17"><a href="#cb30-17" tabindex="-1" aria-label="code-block-30-17"></a><span class="dt">entitlement."com.apple.security.device.camera"</span> <span class="op">=</span> <span class="cn">true</span></span>
-<span id="cb30-18"><a href="#cb30-18" tabindex="-1" aria-label="code-block-30-18"></a><span class="dt">info."NSCameraUsageDescription"</span> <span class="op">=</span> <span class="st">"Enable the camera to classify images interactively."</span></span>
-<span id="cb30-19"><a href="#cb30-19" tabindex="-1" aria-label="code-block-30-19"></a></span>
-<span id="cb30-20"><a href="#cb30-20" tabindex="-1" aria-label="code-block-30-20"></a><span class="kw">[tool.briefcase.app.image-classifiers.linux]</span></span>
-<span id="cb30-21"><a href="#cb30-21" tabindex="-1" aria-label="code-block-30-21"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[]</span></span>
-<span id="cb30-22"><a href="#cb30-22" tabindex="-1" aria-label="code-block-30-22"></a></span>
-<span id="cb30-23"><a href="#cb30-23" tabindex="-1" aria-label="code-block-30-23"></a><span class="kw">[tool.briefcase.app.image-classifiers.windows]</span></span>
-<span id="cb30-24"><a href="#cb30-24" tabindex="-1" aria-label="code-block-30-24"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[]</span></span></code></pre>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb31-1"><a href="#cb31-1" tabindex="-1" aria-label="code-block-31-1"></a><span class="kw">[tool.briefcase]</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1" aria-label="code-block-31-2"></a><span class="dt">project_name</span> <span class="op">=</span> <span class="st">"Image Classifiers"</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1" aria-label="code-block-31-3"></a><span class="dt">bundle</span> <span class="op">=</span> <span class="st">"uk.ac.soton.example"</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1" aria-label="code-block-31-4"></a><span class="dt">url</span> <span class="op">=</span> <span class="st">"https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging-example"</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1" aria-label="code-block-31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1" aria-label="code-block-31-6"></a><span class="kw">[tool.briefcase.app.image-classifiers]</span></span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1" aria-label="code-block-31-7"></a><span class="dt">formal_name</span> <span class="op">=</span> <span class="st">"Image Classifiers"</span></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1" aria-label="code-block-31-8"></a><span class="dt">sources</span> <span class="op">=</span> <span class="op">[</span><span class="st">"image_classifiers"</span><span class="op">]</span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1" aria-label="code-block-31-9"></a><span class="dt">console_app</span> <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1" aria-label="code-block-31-10"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">"toga"</span><span class="op">]</span></span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1" aria-label="code-block-31-11"></a></span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1" aria-label="code-block-31-12"></a><span class="kw">[tool.briefcase.app.image-classifiers.macOS]</span></span>
+<span id="cb31-13"><a href="#cb31-13" tabindex="-1" aria-label="code-block-31-13"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[</span><span class="st">'</span><span class="vs">std-nslog&gt;=1.0.0</span><span class="st">'</span><span class="op">]</span></span>
+<span id="cb31-14"><a href="#cb31-14" tabindex="-1" aria-label="code-block-31-14"></a><span class="co"># Recent Pytorch is not supported on Intel macs.</span></span>
+<span id="cb31-15"><a href="#cb31-15" tabindex="-1" aria-label="code-block-31-15"></a><span class="dt">universal_build</span> <span class="op">=</span> <span class="cn">false</span></span>
+<span id="cb31-16"><a href="#cb31-16" tabindex="-1" aria-label="code-block-31-16"></a><span class="co"># Make sure the app can use the camera.</span></span>
+<span id="cb31-17"><a href="#cb31-17" tabindex="-1" aria-label="code-block-31-17"></a><span class="dt">entitlement."com.apple.security.device.camera"</span> <span class="op">=</span> <span class="cn">true</span></span>
+<span id="cb31-18"><a href="#cb31-18" tabindex="-1" aria-label="code-block-31-18"></a><span class="dt">info."NSCameraUsageDescription"</span> <span class="op">=</span> <span class="st">"Enable the camera to classify images interactively."</span></span>
+<span id="cb31-19"><a href="#cb31-19" tabindex="-1" aria-label="code-block-31-19"></a></span>
+<span id="cb31-20"><a href="#cb31-20" tabindex="-1" aria-label="code-block-31-20"></a><span class="kw">[tool.briefcase.app.image-classifiers.linux]</span></span>
+<span id="cb31-21"><a href="#cb31-21" tabindex="-1" aria-label="code-block-31-21"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[]</span></span>
+<span id="cb31-22"><a href="#cb31-22" tabindex="-1" aria-label="code-block-31-22"></a></span>
+<span id="cb31-23"><a href="#cb31-23" tabindex="-1" aria-label="code-block-31-23"></a><span class="kw">[tool.briefcase.app.image-classifiers.windows]</span></span>
+<span id="cb31-24"><a href="#cb31-24" tabindex="-1" aria-label="code-block-31-24"></a><span class="dt">requires</span> <span class="op">=</span> <span class="op">[]</span></span></code></pre>
+</div>
+</div>
+</div>
 </div>
 <p>There’s a lot more configuration that can be done, for example adding
 custom icons, but this hopefully gives a sense of the configuration that
@@ -898,43 +1132,74 @@ supports.</li>
 application code that needs to be installed, while the
 <code>requires</code> entries are dependencies that are needed for a
 particular app or platform.</p>
-<p>You can test the app in “development” mode using the command:</p>
-<div class="codewrapper sourceCode" id="cb31">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" tabindex="-1" aria-label="code-block-31-1"></a><span class="ex">briefcase</span> dev</span></code></pre>
+<div id="run-build-and-package-the-app" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<p>To build the actual application or app installer, you run:</p>
+<span class="callout-header">Challenge</span>
+<div id="run-build-and-package-the-app" class="callout-inner">
+<h3 class="callout-title">Run, build and package the app</h3>
+<div class="callout-content">
+<p>In the lecture section we talked about different was to run and build
+a briefcase application.</p>
+<p>Try:</p>
+<ul><li>running the app in “developer” mode</li>
+<li>creating the app scaffolding</li>
+<li>building the app</li>
+<li>running the built app</li>
+<li>packaging the application</li>
+</ul></div>
+</div>
+</div>
+<div id="accordionSolution7" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution7" aria-expanded="false" aria-controls="collapseSolution7">
+  <h4 class="accordion-header" id="headingSolution7"> Show me the solution </h4>
+</button>
+<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
+<div class="accordion-body">
+<p>You can test the app in “development” mode using the command:</p>
 <div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" tabindex="-1" aria-label="code-block-32-1"></a><span class="ex">briefcase</span> create</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1" aria-label="code-block-32-2"></a><span class="ex">briefcase</span> build</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" tabindex="-1" aria-label="code-block-32-1"></a><span class="ex">briefcase</span> dev</span></code></pre>
 </div>
-<p>You can test-run the built application using:</p>
+<p>To create and build the actual application or app installer, you
+run:</p>
 <div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" tabindex="-1" aria-label="code-block-33-1"></a><span class="ex">briefcase</span> run</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" tabindex="-1" aria-label="code-block-33-1"></a><span class="ex">briefcase</span> create</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1" aria-label="code-block-33-2"></a><span class="ex">briefcase</span> build</span></code></pre>
+</div>
+<p>You can test-run the built application using:</p>
+<div class="codewrapper sourceCode" id="cb34">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a><span class="ex">briefcase</span> run</span></code></pre>
 </div>
 <p>Finally, you can package the application. On Mac and Windows it will
 default to self-signing the app: you will need to get a signing identity
 to sign your code if you want to be able to run the app on other
 machines or submit to an app store.</p>
-<div class="codewrapper sourceCode" id="cb34">
+<div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" tabindex="-1" aria-label="code-block-34-1"></a><span class="ex">briefcase</span> package</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" tabindex="-1" aria-label="code-block-35-1"></a><span class="ex">briefcase</span> package</span></code></pre>
 </div>
 <p>The package is in the <code>dist</code> subdirectory, and from there
 you can access it and copy it to wherever you need.</p>
-<div id="automation-of-packaging" class="callout">
+</div>
+</div>
+</div>
+</div>
+<div id="automating-packaging-setup" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="automation-of-packaging" class="callout-inner">
-<h3 class="callout-title">Automation of Packaging</h3>
+<div id="automating-packaging-setup" class="callout-inner">
+<h3 class="callout-title">Automating Packaging Setup</h3>
 <div class="callout-content">
 <p>This activity has been assuming that you are working with an existing
 project that you now want to distribute more widely without breaking
@@ -951,6 +1216,35 @@ the setup for the platform you want to distribute for.</p>
 <p>With all of these tools you may need to manually edit the
 <code>pyproject.toml</code> to do things like add or remove
 dependencies.</p>
+</div>
+</div>
+</div>
+<div id="continuous-integration-and-building" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="continuous-integration-and-building" class="callout-inner">
+<h3 class="callout-title">Continuous Integration and Building</h3>
+<div class="callout-content">
+<p>You may have noticed that the Briefcase tool only builds for the
+platform you are working on. If you want to build your application for
+Windows, Mac and Linux you will need a computer or virtual machine
+running each of these operating systems.</p>
+<p>Pure python projects don’t have this project, but if you have a
+Python extension written in C, you will usually only be able to build it
+for the platform you run <code>build</code> on.</p>
+<p>Most CI systems let you specify platforms to run your CI scripts on,
+so this provides a way for you to avoid having to have multiple
+computers or virtual machines: you can write a CI script that builds
+your packages and apps and makes the resulting files available as an
+“artifact” that can be downloaded, tested, and distributed.</p>
+<p>It is even possible to completely automate the release process up to
+and including uploads to PyPI; although you need to be careful with
+secrets such as PyPI access tokens to ensure that they do not get stored
+in your source code. Most CI systems have a way of storing secrets
+securely so the CI system can use them, but they can’t be seen by
+anyone.</p>
 </div>
 </div>
 </div>
