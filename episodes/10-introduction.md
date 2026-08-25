@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Python Packaging"
 teaching: 15
 exercises: 0
 ---
@@ -277,12 +277,13 @@ The easiest way is to use a `[tool.setuptools.package-data]` section to give pat
 ```
 will add all text files and safetensor weights in any package to your distribution.  There are also options to specify files to exclude, and the directories to search for files in.
 
+The `setuptools-scm` project is an add-on for Setuptools understands the `git` version control system, and so will automatically include any files under version control, which is often enough.
+
 #### Hatchling
 
 Hatchling understands `.gitignore` files, and so by default it includes all files in your packages that are under version control, which is often good enough.  You can turn this off, and you can also add or remove files from inclusion, but this is done separately for source distributions and wheels.
 
 Exact details can be found in the [Hatch documentation](https://hatch.pypa.io/latest/config/build/#file-selection).
-
 
 ## Building Distributions
 

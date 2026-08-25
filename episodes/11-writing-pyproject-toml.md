@@ -1,13 +1,13 @@
 ---
 title: "Packaging a Python Project"
-teaching: 15
+teaching: 60
 exercises: 0
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions
 
 - How do I package a Python library for distribution?
-- How do I build bundled as a stand-alone command-line tool or GUI application?
+- How do I build a stand-alone command-line tool or GUI application?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
