@@ -212,7 +212,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="11-writing-pyproject-toml.html">2. Introduction</a>
+        <a href="11-writing-pyproject-toml.html">2. Packaging a Python Project</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -270,13 +270,13 @@
           Home
         </a>
         <a class="chapter-link float-end" href="../instructor/11-writing-pyproject-toml.html" rel="next">
-          Next: Introduction...
+          Next: Packaging a Python...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Introduction</h1>
-        <p>Last updated on 2026-08-24 |
+        <p>Last updated on 2026-08-25 |
 
         <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/edit/main/episodes/10-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -359,14 +359,16 @@ Javascript.</p>
 dependencies, either because your build system needs to know what to
 include in the build, or because your installer needs to know what to
 add to the system.</p>
-<div id="the-history-of-packaging-on-python" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="the-history-of-packaging-on-python" class="callout-inner">
-<h3 class="callout-title">The History of Packaging on Python</h3>
-<div class="callout-content">
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  The History of Packaging on Python
+  </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
 <p>Originally Python had no packaging system: you simply downloaded and
 copied Python files into somewhere that Python would find them (usually
 via the <code>PYTHONPATH</code> environment variable). Eventually there
@@ -411,6 +413,7 @@ what <code>easy_install</code>, <code>setup.py</code> and “egg” files
 are if you encounter references to them.</p>
 <p>And also that packaging is <strong>hard</strong> to do, and even
 harder to get right. It’s taken Python over 30 years.</p>
+</div>
 </div>
 </div>
 </div>
@@ -529,21 +532,27 @@ in a private repository that you have access to.</p>
 <p>You can use comparison operators when installing packages from the
 command-line using tools like <code>pip</code> or <code>uv</code>, but
 you need to take care because <code>&gt;</code> and <code>&lt;</code>
-have special meanings to console and other similar command shells. If
-you need to specify version ranges on the command line, it’s generally a
+have special meanings to bash and other similar command shells. If you
+need to specify version ranges on the command line, it’s generally a
 good idea to put quotes around them, eg.:</p>
-<pre class="console"><code>pip install "pytorch &gt;= 2.11"</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">pip</span> install <span class="st">"pytorch &gt;= 2.11"</span></span></code></pre>
 </div>
 </div>
 </div>
-<div id="supply-chain-attacks" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
 </div>
-<span class="callout-header">Callout</span>
-<div id="supply-chain-attacks" class="callout-inner">
-<h3 class="callout-title">Supply-Chain Attacks</h3>
-<div class="callout-content">
+<div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
+  <h3 class="accordion-header" id="headingSpoiler2">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Supply-Chain Attacks
+  </h3>
+</button>
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div class="accordion-body">
 <p>When you are using other people’s code, you are implicitly
 <em>trusting</em> other people’s code. This trust is something which can
 be exploited by hackers. There are two main ways that this trust can be
@@ -573,6 +582,7 @@ the state of those projects (eg. subscribing to announcements, or
 reading news sources which report on these sorts of issues). If well-run
 projects are compromised, they are usually up-front about the
 problem.</p>
+</div>
 </div>
 </div>
 </div>
@@ -631,19 +641,22 @@ idea.</p>
 specifying optional dependencies (eg. for a GUI or for development
 work), command-line scripts and configuration options for tools such as
 linters.</p>
-<div id="toml" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="toml" class="callout-inner">
-<h3 class="callout-title">TOML</h3>
-<div class="callout-content">
+<div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
+  <h3 class="accordion-header" id="headingSpoiler3">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  TOML
+  </h3>
+</button>
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div class="accordion-body">
 <p>TOML, or “Tom’s Markup Language”, is a human-readable data format
 along the lines of XML, JSON, YAML and similar, but designed to be
 somewhat easier for humans to <em>write</em>. It is somewhat inspired by
 the <code>.ini</code> configuration file format used in older Windows
 apps, but less complex and a more modern.</p>
+</div>
 </div>
 </div>
 </div>
@@ -724,18 +737,22 @@ mapping of extra names to the corresponding dependencies:</p>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="dt">gui</span> <span class="op">=</span> <span class="op">[</span><span class="st">"pyside6"</span><span class="op">]</span></span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a><span class="dt">cli</span> <span class="op">=</span> <span class="op">[</span><span class="st">"click"</span><span class="op">]</span></span></code></pre>
 </div>
-<p>The dependency names are up to you (there is nothing special about
-<code>dev</code>, <code>gui</code> or <code>cli</code> in the above
-example), and the dependencies themselves follow the same rules as other
-dependencies discussed earlier.</p>
+<p>The optional dependency names are up to you (there is nothing special
+about <code>dev</code>, <code>gui</code> or <code>cli</code> in the
+above example), and the dependencies themselves follow the same rules as
+other dependencies discussed earlier.</p>
 <p>To install a distribution and one or more of its extras, you add the
 extras you want in square brackets after the name of the package. For
 example to be able to read and write Excel spreadsheets from the Pandas
 library, you need to include the <code>excel</code> extra, and for
 reading and writing HTML pages you need the <code>html</code> extra. At
 the command-line installing both would look like:</p>
-<pre class="console"><code>pip install "pandas[excel,html]"</code></pre>
-<p>The quotes are needed as console and other shells consider square
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">pip</span> install <span class="st">"pandas[excel,html]"</span></span></code></pre>
+</div>
+<p>The quotes are needed as bash and other shells consider square
 brackets to have special meaning.</p>
 <p>To specify in a <code>pyproject.toml</code> it would be similar:</p>
 <div class="codewrapper sourceCode" id="cb7">
@@ -745,14 +762,8 @@ brackets to have special meaning.</p>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>  <span class="st">"pandas[excel,html]"</span><span class="op">,</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="op">]</span></span></code></pre>
 </div>
-<div id="dependency-groups" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="dependency-groups" class="callout-inner">
-<h3 class="callout-title">Dependency Groups</h3>
-<div class="callout-content">
+<div class="section level4">
+<h4 id="dependency-groups">Dependency Groups<a class="anchor" aria-label="anchor" href="#dependency-groups"></a></h4>
 <p>A recent way of specifying additional dependencies are “dependency
 groups”, which are specified similarly to extras, but using the
 top-level <code>[dependency-groups]</code> section, and which have
@@ -777,8 +788,10 @@ uses pandas, you might have the following in your
 </div>
 <p>and then you could install the dependencies into your virtual
 environment with:</p>
-<pre class="console"><code>pip install --group notebooks</code></pre>
-</div>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">pip</span> install <span class="at">--group</span> notebooks</span></code></pre>
 </div>
 </div>
 </div>
@@ -789,7 +802,11 @@ project in “editable” form into your working virtual environment using
 <code>pip</code> or similar tools. At the command-line, change directory
 into the top-level of your project where your
 <code>pyproject.toml</code> is, and run:</p>
-<pre class="console"><code>pip install -e .</code></pre>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre>
+</div>
 <p>This installs your library and its dependencies into your current
 virtual environment, but in a way so that if you edit your library then
 the changes are picked up when you restart Python and import your
@@ -848,10 +865,18 @@ continuous integration to make sure that nothing is broken.</p>
 <p>The standard Python tool for building both wheels and source
 distributions is <code>build</code>. You can install it into your
 environment using <code>pip</code>:</p>
-<pre class="console"><code>pip install build</code></pre>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="ex">pip</span> install build</span></code></pre>
+</div>
 <p>and then you can use the <code>build</code> command to build wheels,
 source distributions, or both:</p>
-<pre class="console"><code>python -m build</code></pre>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="ex">python</span> <span class="at">-m</span> build</span></code></pre>
+</div>
 <p>The build artifacts produced will be located in the <code>dist</code>
 directory by default.</p>
 <div class="section level3">
@@ -875,21 +900,171 @@ can use the Twine tool to publish your code to your project on PyPI. You
 don’t have to use Twine: you <em>can</em> manually upload files, but
 Twine significantly improves the experience.</p>
 <p>Before using Twine, you will need to create an account on PyPI, and
-then reserve your distribution</p>
+then reserve your project’s name. As part of this process you will be
+given a secret token (which you should <em>never</em> publish or include
+in a code repository) that permits uploading your distributions to your
+PyPI project.</p>
 <p>To use Twine, you install it with pip:</p>
-<pre class="console"><code>pip install twine</code></pre>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">pip</span> install twine</span></code></pre>
+</div>
 <p>You can then check that your distribution metadata renders correctly
 using <code>twine check</code></p>
-<pre class="console"><code>twine check</code></pre>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="ex">twine</span> check</span></code></pre>
+</div>
 <p>PyPI provides a “Test PyPI” instance that you can use to verify that
 everything looks correct:</p>
-<pre class="console"><code>twine upload -r testpypi dist/*</code></pre>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="ex">twine</span> upload <span class="at">-r</span> testpypi dist/<span class="pp">*</span></span></code></pre>
+</div>
 <p>When you are happy that everything is OK, you can then upload
 with:</p>
-<pre class="console"><code>twine upload dist/*</code></pre>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="ex">twine</span> upload dist/<span class="pp">*</span></span></code></pre>
+</div>
 </div>
 <div class="section level2">
 <h2 id="packaging-applications">Packaging Applications<a class="anchor" aria-label="anchor" href="#packaging-applications"></a></h2>
+<p>While packaging a tool works well for distributing to people who are
+comfortable with Python, <code>pip</code> and other packaging tools, it
+doesn’t help when you need to deploy software on systems where the user
+is less comfortable with Python.</p>
+<p>Each operating system has different conventions for how applications
+are packaged and delivered, and some platforms require code to be signed
+by the developer or—particularly for mobile—restrict distribution to an
+app store.</p>
+<p>Deploying a Python-based tool in this way requires not just packaging
+the Python code, but the Python executable and any extensions or other
+dependencies, sometimes into a single executable file. This process is
+sometimes called “freezing” a Python application.</p>
+<p>There are a number of tools which allow this sort of packaging. We’ll
+look at a package called <a href="https://briefcase.beeware.org" class="external-link">Briefcase</a> that not only handles
+the ‘freezing’ of the application but also handles signing the
+application and preparing it for deployment via an app store, if
+desired. Briefcase supports deployment on Windows, Linux, MacOS, iOS,
+Android and even Web deployment (using Web Assembly).</p>
+<p>To use Briefcase, create a new Python virtual environment and install
+briefcase into it:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv-briefcase</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a><span class="bu">source</span> venv-briefcase/bin/activate</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1" aria-label="code-block-18-3"></a><span class="ex">pip</span> install briefcase</span></code></pre>
+</div>
+<p>You can then create an application in an empty directory by
+executing:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="ex">briefcase</span> new</span></code></pre>
+</div>
+<p>This will then run you through a series of questions to help
+configure your application. By default Briefcase will create a project
+for Beeware’s <a href="https://toga.beeware.org" class="external-link">Toga GUI Toolkit</a>
+but you can also create applications which use PySide/Qt, PyGame, or
+even plain command-line applications.</p>
+<p>Briefcase will create a skeleton project for you, complete with a
+<code>pyproject.toml</code> and a stub source directory and package.</p>
+<p>You can run this stub application in “developer” mode by
+executing:</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a><span class="ex">briefcase</span> dev</span></code></pre>
+</div>
+<p>You can then write or add your application code to the package. If
+you need to include third-party libraries, add them to your
+<code>pyproject.toml</code> as described above.</p>
+<p>When you are ready to package the application, you can run:</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1" aria-label="code-block-21-1"></a><span class="ex">briefcase</span> create</span></code></pre>
+</div>
+<p>to create the application scaffold, and then:</p>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" tabindex="-1" aria-label="code-block-22-1"></a><span class="ex">briefcase</span> build</span></code></pre>
+</div>
+<p>to perform any binary compilation that is needed.</p>
+<p>To test, you can execute:</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" tabindex="-1" aria-label="code-block-23-1"></a><span class="ex">briefcase</span> run</span></code></pre>
+</div>
+<p>to run as a normal application for your platform.</p>
+<p>Finally, you can build an actual packaged application using:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" tabindex="-1" aria-label="code-block-24-1"></a><span class="ex">briefcase</span> package</span></code></pre>
+</div>
+<p>The exact options depend on the operating system you are building
+for, and may include options for signing the application for deployment
+on macOS or Windows.</p>
+<div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
+  <h3 class="accordion-header" id="headingSpoiler4">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  Python on Mobile Platforms
+  </h3>
+</button>
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div class="accordion-body">
+<p>As of Python 3.14, Python officially supports Android and iOS.
+However neither Android or iOS have a console or terminal, so you can’t
+install Python stand-alone and run Python from the command-line. Instead
+Python needs to be embedded as part of a native app for the
+platform.</p>
+<p>The Toga library supports GUIs for iOS and Android, and Briefcase
+then allows you to build the native application. To do this, you will
+need to install the appropriate developer tools for Android or Xcode for
+iOS (both of which are free, but Xcode is only available for macOS).</p>
+<p>While pure Python packages work for these platforms, because support
+for them is new many Python extensions are not supported yet. Of
+particular note for research code, much of the scientific Python
+ecosystem is not fully supported: in particular deep learning projects
+like Pytorch, Tensorflow and Jax do not yet support mobile (and provide
+other routes to support deep learning on mobile platforms).</p>
+</div>
+</div>
+</div>
+</div>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul><li>simple scripts can specify their dependencies by structured comments
+at the start of the script.</li>
+<li>larger packages can specify their dependencies and other information
+about the project in a <code>pyproject.toml</code> file.</li>
+<li>the <code>pyproject.toml</code> file also provides information about
+build tools and dependencies.</li>
+<li>the <code>build</code> utility handles the creation of wheel and
+sdist distributions.</li>
+<li>the <code>twine</code> utility handles uploading distributions to
+the Python package index.</li>
+<li>GUI and command-line tools can be packaged as operating
+system-specific apps using tools like <code>briefcase</code>.</li>
+</ul></div>
+</div>
+</div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -911,7 +1086,7 @@ any links that you are not going to use.
           Home
         </a>
         <a class="chapter-link float-end" href="../instructor/11-writing-pyproject-toml.html" rel="next">
-          Next: Introduction...
+          Next: Packaging a Python...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -959,7 +1134,7 @@ any links that you are not going to use.
   "url": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/10-introduction.html",
   "identifier": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/10-introduction.html",
   "dateCreated": "2026-08-14",
-  "dateModified": "2026-08-24",
+  "dateModified": "2026-08-25",
   "datePublished": "2026-08-25"
 }
 
