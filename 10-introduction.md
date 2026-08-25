@@ -4,18 +4,18 @@ teaching: 15
 exercises: 0
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions
+::: questions
 
 - What is a `pyproject.toml` file?
 - What information do I need to include in the file for my project?
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
-::::::::::::::::::::::::::::::::::::: objectives
+::: objectives
 
 - Be able to create a `pyproject.toml` file for a small project.
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
 # Packaging Python Code
 
@@ -39,7 +39,7 @@ There are two basic of ways of solving this problem:
 
 In both cases you need to be able to *specify* those dependencies, either because your build system needs to know what to include in the build, or because your installer needs to know what to add to the system.
 
-::: callout
+::: spoiler
 
 ### The History of Packaging on Python
 
@@ -107,14 +107,14 @@ Finally, if absolutely necessary, you can specify a URL which contains the distr
 
 ### Dependencies on the Command-line
 
-You can use comparison operators when installing packages from the command-line using tools like `pip` or `uv`, but you need to take care because `>` and `<` have special meanings to console and other similar command shells. If you need to specify version ranges on the command line, it's generally a good idea to put quotes around them, eg.:
-``` console
+You can use comparison operators when installing packages from the command-line using tools like `pip` or `uv`, but you need to take care because `>` and `<` have special meanings to bash and other similar command shells. If you need to specify version ranges on the command line, it's generally a good idea to put quotes around them, eg.:
+``` bash
 pip install "pytorch >= 2.11"
 ```
 
 :::
 
-::: callout
+::: spoiler
 
 ### Supply-Chain Attacks
 
@@ -171,7 +171,7 @@ Not all of these are strictly needed for packaging, but are a good idea.
 
 There are additional optional sections that you can include, such as specifying optional dependencies (eg. for a GUI or for development work), command-line scripts and configuration options for tools such as linters.
 
-::: callout
+::: spoiler
 
 ### TOML
 
@@ -215,13 +215,13 @@ dev = [
 gui = ["pyside6"]
 cli = ["click"]
 ```
-The dependency names are up to you (there is nothing special about `dev`, `gui` or `cli` in the above example), and the dependencies themselves follow the same rules as other dependencies discussed earlier.
+The optional dependency names are up to you (there is nothing special about `dev`, `gui` or `cli` in the above example), and the dependencies themselves follow the same rules as other dependencies discussed earlier.
 
 To install a distribution and one or more of its extras, you add the extras you want in square brackets after the name of the package.  For example to be able to read and write Excel spreadsheets from the Pandas library, you need to include the `excel` extra, and for reading and writing HTML pages you need the `html` extra.  At the command-line installing both would look like:
-``` console
+``` bash
 pip install "pandas[excel,html]"
 ```
-The quotes are needed as console and other shells consider square brackets to have special meaning.
+The quotes are needed as bash and other shells consider square brackets to have special meaning.
 
 To specify in a `pyproject.toml` it would be similar:
 ``` toml
@@ -230,9 +230,7 @@ dependencies = [
 ]
 ```
 
-::: callout
-
-### Dependency Groups
+#### Dependency Groups
 
 A recent way of specifying additional dependencies are "dependency groups", which are specified similarly to extras, but using the top-level `[dependency-groups]` section, and which have slightly different behaviour:
 
@@ -248,16 +246,14 @@ For example, to install requirements for a jupyter notebook which uses pandas, y
 notebooks = ["notebook", "pandas"]
 ```
 and then you could install the dependencies into your virtual environment with:
-``` console
+``` bash
 pip install --group notebooks
 ```
-
-:::
 
 ### Installing for Development
 
 Once you have a `pyproject.toml` you can install your project in "editable" form into your working virtual environment using `pip` or similar tools. At the command-line, change directory into the top-level of your project where your `pyproject.toml` is, and run:
-``` console
+``` bash
 pip install -e .
 ```
 This installs your library and its dependencies into your current virtual environment, but in a way so that if you edit your library then the changes are picked up when you restart Python and import your package.
@@ -295,11 +291,11 @@ Python has two common ways of distributing packages: source distributions and bi
 It's a good idea to build your library regularly as part of continuous integration to make sure that nothing is broken.
 
 The standard Python tool for building both wheels and source distributions is `build`. You can install it into your environment using `pip`:
-``` console
+``` bash
 pip install build
 ```
 and then you can use the `build` command to build wheels, source distributions, or both:
-``` console
+``` bash
 python -m build
 ```
 The build artifacts produced will be located in the `dist` directory by default.
@@ -312,28 +308,99 @@ The `build` tool has the limitation that it can only build either pure Python wh
 
 When you are ready to release your code, after you have built it, you can use the Twine tool to publish your code to your project on PyPI.  You don't have to use Twine: you *can* manually upload files, but Twine significantly improves the experience.
 
-Before using Twine, you will need to create an account on PyPI, and then reserve your distribution
+Before using Twine, you will need to create an account on PyPI, and then reserve your project's name. As part of this process you will be given a secret token (which you should *never* publish or include in a code repository) that permits uploading your distributions to your PyPI project.
 
 To use Twine, you install it with pip:
-``` console
+``` bash
 pip install twine
 ```
 You can then check that your distribution metadata renders correctly using `twine check`
-``` console
+``` bash
 twine check
 ```
 PyPI provides a "Test PyPI" instance that you can use to verify that everything looks correct:
-``` console
+``` bash
 twine upload -r testpypi dist/*
 ```
 When you are happy that everything is OK, you can then upload with:
-``` console
+``` bash
 twine upload dist/*
 ```
 
 ## Packaging Applications
 
+While packaging a tool works well for distributing to people who are comfortable with Python, `pip` and other packaging tools, it doesn't help when you need to deploy software on systems where the user is less comfortable with Python.
+
+Each operating system has different conventions for how applications are packaged and delivered, and some platforms require code to be signed by the developer or—particularly for mobile—restrict distribution to an app store.
+
+Deploying a Python-based tool in this way requires not just packaging the Python code, but the Python executable and any extensions or other dependencies, sometimes into a single executable file.  This process is sometimes called "freezing" a Python application.
+
+There are a number of tools which allow this sort of packaging. We'll look at a package called [Briefcase](https://briefcase.beeware.org) that not only handles the 'freezing' of the application but also handles signing the application and preparing it for deployment via an app store, if desired.  Briefcase supports deployment on Windows, Linux, MacOS, iOS, Android and even Web deployment (using Web Assembly).
+
+To use Briefcase, create a new Python virtual environment and install briefcase into it:
+``` bash
+python -m venv venv-briefcase
+source venv-briefcase/bin/activate
+pip install briefcase
+```
+
+You can then create an application in an empty directory by executing:
+``` bash
+briefcase new
+```
+This will then run you through a series of questions to help configure your application. By default Briefcase will create a project for Beeware's [Toga GUI Toolkit](https://toga.beeware.org) but you can also create applications which use PySide/Qt, PyGame, or even plain command-line applications.
+
+Briefcase will create a skeleton project for you, complete with a `pyproject.toml` and a stub source directory and package.
+
+You can run this stub application in "developer" mode by executing:
+``` bash
+briefcase dev
+```
+
+You can then write or add your application code to the package. If you need to include third-party libraries, add them to your `pyproject.toml` as described above.
+
+When you are ready to package the application, you can run:
+``` bash
+briefcase create
+```
+to create the application scaffold, and then:
+``` bash
+briefcase build
+```
+to perform any binary compilation that is needed.
+
+To test, you can execute:
+``` bash
+briefcase run
+```
+to run as a normal application for your platform.
+
+Finally, you can build an actual packaged application using:
+``` bash
+briefcase package
+```
+The exact options depend on the operating system you are building for, and may include options for signing the application for deployment on macOS or Windows.
+
+::: spoiler
+
+### Python on Mobile Platforms
+
+As of Python 3.14, Python officially supports Android and iOS.  However neither Android or iOS have a console or terminal, so you can't install Python stand-alone and run Python from the command-line.  Instead Python needs to be embedded as part of a native app for the platform.
+
+The Toga library supports GUIs for iOS and Android, and Briefcase then allows you to build the native application. To do this, you will need to install the appropriate developer tools for Android or Xcode for iOS (both of which are free, but Xcode is only available for macOS).
+
+While pure Python packages work for these platforms, because support for them is new many Python extensions are not supported yet.  Of particular note for research code, much of the scientific Python ecosystem is not fully supported: in particular deep learning projects like Pytorch, Tensorflow and Jax do not yet support mobile (and provide other routes to support deep learning on mobile platforms).
+
+:::
 
 
+::: keypoints
 
+- simple scripts can specify their dependencies by structured comments at the start of the script.
+- larger packages can specify their dependencies and other information about the project in a `pyproject.toml` file.
+- the `pyproject.toml` file also provides information about build tools and dependencies.
+- the `build` utility handles the creation of wheel and sdist distributions.
+- the `twine` utility handles uploading distributions to the Python package index.
+- GUI and command-line tools can be packaged as operating system-specific apps using tools like `briefcase`.
 
+:::

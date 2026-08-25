@@ -1,19 +1,22 @@
 ---
-title: "Introduction"
+title: "Packaging a Python Project"
 teaching: 15
 exercises: 0
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions
 
-- What is a `pyproject.toml` file?
-- What information do I need to include in the file for my project?
+- How do I package a Python library for distribution?
+- How do I build bundled as a stand-alone command-line tool or GUI application?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Be able to create a `pyproject.toml` file for a small project.
+- Write a `pyproject.toml` file for an existing project.
+- Configure continuous integration and linting using the `pyproject.toml` file.
+- Build binary wheels for a project.
+- Build an application for your operating system.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -73,7 +76,7 @@ name = "packaging-project-[your-name]"
 version = "0.0.1"
 ```
 
-This is the absolute minimum that you need. With just this you can build and install your project with `pip`, but usually you will want to specify the build system as well. We are going to use `setuptools` in this example. We have some data files that are needed in the distributions (mainly image files used in the UI and tests) and we want to also use `setuptools-scm` to make sure that all files under version control are included in the distribution.  The
+This is the absolute minimum that you need. With just this you can build and install your project with `pip`, but usually you will want to specify the build system as well. We are going to use `setuptools` in this example. We have some data files that are needed in the distributions (mainly image files used in the UI and tests) and we want to also use `setuptools-scm` to make sure that all files under version control are included in the distribution (there are ways to include and exclude extra files if needed, but we don't need to).
 
 ``` toml
 [build-system]
@@ -242,7 +245,7 @@ Once you have done this (and re-run `pip install -e ".[gui,cli]"`) you should be
 image-classifier-cli tests/data/*.jpg
 ```
 
-::: callout
+::: spoiler
 
 ### "Flat" vs. "src" Project Layout
 
@@ -483,5 +486,15 @@ Hatch will set up a complete project for you, with a skeleton framework of files
 If you are looking to build an application or command-line tool, then Briefcase can also set up the framework for that, leading you through the setup for the platform you want to distribute for.
 
 With all of these tools you may need to manually edit the `pyproject.toml` to do things like add or remove dependencies.
+
+:::
+
+::: keypoints
+
+- adding a `pyproject.toml` to your project not only allows you to package your code for other people, it makes testing and continuous integration easier.
+- extra dependencies allow you to provide options for your users about what to install for different use-cases
+- dependency groups allow you to specify dependencies that do not require your python packgae itself to be installed, which is ideal for development, testing and linting dependencies.
+- configuration for development tools can be included in the `pyproject.toml`
+- adding entries for `briefcase` in your `pyproject.toml` allows you to build stand-alone apps for your operating system.
 
 :::
