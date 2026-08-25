@@ -648,7 +648,7 @@ With all of these tools you may need to manually edit the `pyproject.toml` to do
 
 You may have noticed that the Briefcase tool only builds for the platform you are working on. If you want to build your application for Windows, Mac and Linux you will need a computer or virtual machine running each of these operating systems.
 
-Pure python projects don't have this project, but if you have a Python extension written in C, you will usually only be able to build it for the platform you run `build` on.
+Pure python projects don't have this problem, but if you have a Python extension written in C, you will usually only be able to build it for the platform you run `build` on.
 
 Most CI systems let you specify platforms to run your CI scripts on, so this provides a way for you to avoid having to have multiple computers or virtual machines: you can write a CI script that builds your packages and apps and makes the resulting files available as an "artifact" that can be downloaded, tested, and distributed.
 
