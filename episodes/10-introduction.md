@@ -39,7 +39,7 @@ There are two basic of ways of solving this problem:
 
 In both cases you need to be able to *specify* those dependencies, either because your build system needs to know what to include in the build, or because your installer needs to know what to add to the system.
 
-::: callout
+::: spoiler
 
 ### The History of Packaging on Python
 
@@ -107,14 +107,14 @@ Finally, if absolutely necessary, you can specify a URL which contains the distr
 
 ### Dependencies on the Command-line
 
-You can use comparison operators when installing packages from the command-line using tools like `pip` or `uv`, but you need to take care because `>` and `<` have special meanings to console and other similar command shells. If you need to specify version ranges on the command line, it's generally a good idea to put quotes around them, eg.:
-``` console
+You can use comparison operators when installing packages from the command-line using tools like `pip` or `uv`, but you need to take care because `>` and `<` have special meanings to bash and other similar command shells. If you need to specify version ranges on the command line, it's generally a good idea to put quotes around them, eg.:
+``` bash
 pip install "pytorch >= 2.11"
 ```
 
 :::
 
-::: callout
+::: spoiler
 
 ### Supply-Chain Attacks
 
@@ -171,7 +171,7 @@ Not all of these are strictly needed for packaging, but are a good idea.
 
 There are additional optional sections that you can include, such as specifying optional dependencies (eg. for a GUI or for development work), command-line scripts and configuration options for tools such as linters.
 
-::: callout
+::: spoiler
 
 ### TOML
 
@@ -215,13 +215,13 @@ dev = [
 gui = ["pyside6"]
 cli = ["click"]
 ```
-The dependency names are up to you (there is nothing special about `dev`, `gui` or `cli` in the above example), and the dependencies themselves follow the same rules as other dependencies discussed earlier.
+The optional dependency names are up to you (there is nothing special about `dev`, `gui` or `cli` in the above example), and the dependencies themselves follow the same rules as other dependencies discussed earlier.
 
 To install a distribution and one or more of its extras, you add the extras you want in square brackets after the name of the package.  For example to be able to read and write Excel spreadsheets from the Pandas library, you need to include the `excel` extra, and for reading and writing HTML pages you need the `html` extra.  At the command-line installing both would look like:
-``` console
+``` bash
 pip install "pandas[excel,html]"
 ```
-The quotes are needed as console and other shells consider square brackets to have special meaning.
+The quotes are needed as bash and other shells consider square brackets to have special meaning.
 
 To specify in a `pyproject.toml` it would be similar:
 ``` toml
@@ -230,9 +230,7 @@ dependencies = [
 ]
 ```
 
-::: callout
-
-### Dependency Groups
+::: spoiler
 
 A recent way of specifying additional dependencies are "dependency groups", which are specified similarly to extras, but using the top-level `[dependency-groups]` section, and which have slightly different behaviour:
 
@@ -248,16 +246,14 @@ For example, to install requirements for a jupyter notebook which uses pandas, y
 notebooks = ["notebook", "pandas"]
 ```
 and then you could install the dependencies into your virtual environment with:
-``` console
+``` bash
 pip install --group notebooks
 ```
-
-:::
 
 ### Installing for Development
 
 Once you have a `pyproject.toml` you can install your project in "editable" form into your working virtual environment using `pip` or similar tools. At the command-line, change directory into the top-level of your project where your `pyproject.toml` is, and run:
-``` console
+``` bash
 pip install -e .
 ```
 This installs your library and its dependencies into your current virtual environment, but in a way so that if you edit your library then the changes are picked up when you restart Python and import your package.
@@ -295,11 +291,11 @@ Python has two common ways of distributing packages: source distributions and bi
 It's a good idea to build your library regularly as part of continuous integration to make sure that nothing is broken.
 
 The standard Python tool for building both wheels and source distributions is `build`. You can install it into your environment using `pip`:
-``` console
+``` bash
 pip install build
 ```
 and then you can use the `build` command to build wheels, source distributions, or both:
-``` console
+``` bash
 python -m build
 ```
 The build artifacts produced will be located in the `dist` directory by default.
@@ -315,19 +311,19 @@ When you are ready to release your code, after you have built it, you can use th
 Before using Twine, you will need to create an account on PyPI, and then reserve your distribution
 
 To use Twine, you install it with pip:
-``` console
+``` bash
 pip install twine
 ```
 You can then check that your distribution metadata renders correctly using `twine check`
-``` console
+``` bash
 twine check
 ```
 PyPI provides a "Test PyPI" instance that you can use to verify that everything looks correct:
-``` console
+``` bash
 twine upload -r testpypi dist/*
 ```
 When you are happy that everything is OK, you can then upload with:
-``` console
+``` bash
 twine upload dist/*
 ```
 
