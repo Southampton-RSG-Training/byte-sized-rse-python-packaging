@@ -488,3 +488,13 @@ If you are looking to build an application or command-line tool, then Briefcase 
 With all of these tools you may need to manually edit the `pyproject.toml` to do things like add or remove dependencies.
 
 :::
+
+::: keypoints
+
+- adding a `pyproject.toml` to your project not only allows you to package your code for other people, it makes testing and continuous integration easier.
+- extra dependencies allow you to provide options for your users about what to install for different use-cases
+- dependency groups allow you to specify dependencies that do not require your python packgae itself to be installed, which is ideal for development, testing and linting dependencies.
+- configuration for development tools can be included in the `pyproject.toml`
+- adding entries for `briefcase` in your `pyproject.toml` allows you to build stand-alone apps for your operating system.
+
+:::

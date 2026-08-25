@@ -4,18 +4,18 @@ teaching: 15
 exercises: 0
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions
+::: questions
 
 - What is a `pyproject.toml` file?
 - What information do I need to include in the file for my project?
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
-::::::::::::::::::::::::::::::::::::: objectives
+::: objectives
 
 - Be able to create a `pyproject.toml` file for a small project.
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
 # Packaging Python Code
 
@@ -230,7 +230,7 @@ dependencies = [
 ]
 ```
 
-::: spoiler
+#### Dependency Groups
 
 A recent way of specifying additional dependencies are "dependency groups", which are specified similarly to extras, but using the top-level `[dependency-groups]` section, and which have slightly different behaviour:
 
@@ -308,7 +308,7 @@ The `build` tool has the limitation that it can only build either pure Python wh
 
 When you are ready to release your code, after you have built it, you can use the Twine tool to publish your code to your project on PyPI.  You don't have to use Twine: you *can* manually upload files, but Twine significantly improves the experience.
 
-Before using Twine, you will need to create an account on PyPI, and then reserve your distribution
+Before using Twine, you will need to create an account on PyPI, and then reserve your project's name. As part of this process you will be given a secret token (which you should *never* publish or include in a code repository) that permits uploading your distributions to your PyPI project.
 
 To use Twine, you install it with pip:
 ``` bash
@@ -329,7 +329,78 @@ twine upload dist/*
 
 ## Packaging Applications
 
+While packaging a tool works well for distributing to people who are comfortable with Python, `pip` and other packaging tools, it doesn't help when you need to deploy software on systems where the user is less comfortable with Python.
+
+Each operating system has different conventions for how applications are packaged and delivered, and some platforms require code to be signed by the developer or—particularly for mobile—restrict distribution to an app store.
+
+Deploying a Python-based tool in this way requires not just packaging the Python code, but the Python executable and any extensions or other dependencies, sometimes into a single executable file.  This process is sometimes called "freezing" a Python application.
+
+There are a number of tools which allow this sort of packaging. We'll look at a package called [Briefcase](https://briefcase.beeware.org) that not only handles the 'freezing' of the application but also handles signing the application and preparing it for deployment via an app store, if desired.  Briefcase supports deployment on Windows, Linux, MacOS, iOS, Android and even Web deployment (using Web Assembly).
+
+To use Briefcase, create a new Python virtual environment and install briefcase into it:
+``` bash
+python -m venv venv-briefcase
+source venv-briefcase/bin/activate
+pip install briefcase
+```
+
+You can then create an application in an empty directory by executing:
+``` bash
+briefcase new
+```
+This will then run you through a series of questions to help configure your application. By default Briefcase will create a project for Beeware's [Toga GUI Toolkit](https://toga.beeware.org) but you can also create applications which use PySide/Qt, PyGame, or even plain command-line applications.
+
+Briefcase will create a skeleton project for you, complete with a `pyproject.toml` and a stub source directory and package.
+
+You can run this stub application in "developer" mode by executing:
+``` bash
+briefcase dev
+```
+
+You can then write or add your application code to the package. If you need to include third-party libraries, add them to your `pyproject.toml` as described above.
+
+When you are ready to package the application, you can run:
+``` bash
+briefcase create
+```
+to create the application scaffold, and then:
+``` bash
+briefcase build
+```
+to perform any binary compilation that is needed.
+
+To test, you can execute:
+``` bash
+briefcase run
+```
+to run as a normal application for your platform.
+
+Finally, you can build an actual packaged application using:
+``` bash
+briefcase package
+```
+The exact options depend on the operating system you are building for, and may include options for signing the application for deployment on macOS or Windows.
+
+::: spoiler
+
+### Python on Mobile Platforms
+
+As of Python 3.14, Python officially supports Android and iOS.  However neither Android or iOS have a console or terminal, so you can't install Python stand-alone and run Python from the command-line.  Instead Python needs to be embedded as part of a native app for the platform.
+
+The Toga library supports GUIs for iOS and Android, and Briefcase then allows you to build the native application. To do this, you will need to install the appropriate developer tools for Android or Xcode for iOS (both of which are free, but Xcode is only available for macOS).
+
+While pure Python packages work for these platforms, because support for them is new many Python extensions are not supported yet.  Of particular note for research code, much of the scientific Python ecosystem is not fully supported: in particular deep learning projects like Pytorch, Tensorflow and Jax do not yet support mobile (and provide other routes to support deep learning on mobile platforms).
+
+:::
 
 
+::: keypoints
 
+- simple scripts can specify their dependencies by structured comments at the start of the script.
+- larger packages can specify their dependencies and other information about the project in a `pyproject.toml` file.
+- the `pyproject.toml` file also provides information about build tools and dependencies.
+- the `build` utility handles the creation of wheel and sdist distributions.
+- the `twine` utility handles uploading distributions to the Python package index.
+- GUI and command-line tools can be packaged as operating system-specific apps using tools like `briefcase`.
 
+:::
