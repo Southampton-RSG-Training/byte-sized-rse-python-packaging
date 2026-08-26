@@ -29,4 +29,4 @@ for installing Python in preparation for undertaking their Python lesson.
 
 The hands-on part of this topic will requires a code editor or IDE, such as Visual Studio Code (VS Code).
 
-If you do not have a code editor installed, please [download the appropriate version of Visual Studio Code][https://code.visualstudio.com/] for your operating system (Windows, macOS, or Linux) and system architecture (e.g., 64-bit, ARM).
+If you do not have a code editor installed, please [download the appropriate version of Visual Studio Code](https://code.visualstudio.com/) for your operating system (Windows, macOS, or Linux) and system architecture (e.g., 64-bit, ARM).
