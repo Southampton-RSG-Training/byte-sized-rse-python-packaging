@@ -303,7 +303,7 @@ The build artifacts produced will be located in the `dist` directory by default.
 
 ### Building on Other Platforms
 
-The `build` tool has the limitation that it can only build either pure Python wheels or wheels for the current platform and Python version.  If you need to build wheels which include extension modules then the [`cibuildwheel`](https://cibuildwheel.pypa.io/en/stable/) project provides a CI tool (available for GitHub and GitLab in particular) which will automatically set up virtual machines and run `build` on a wide variety of platforms. Take care when doing this with private repositories: the build process is time-consuming and may eat your free CI time, particularly if you enable some of the more exotic platforms.
+The `build` tool has the limitation that it can only build either pure Python wheels or wheels for the current platform and Python version.  If you need to build wheels which include extension modules then the [`cibuildwheel`](https://cibuildwheel.pypa.io/en/stable/) project provides a CI tool (available for GitHub and GitLab in particular) which will automatically set up virtual machines and run `build` on a wide variety of platforms. Take care when doing this with private repositories: the build process is time-consuming and may eat your CI time, particularly if you enable some of the more exotic platforms which need to be emulated.
 
 ## Publishing Distributions to PyPI
 
@@ -323,7 +323,9 @@ PyPI provides a "Test PyPI" instance that you can use to verify that everything 
 ``` bash
 twine upload -r testpypi dist/*
 ```
-When you are happy that everything is OK, you can then upload with:
+Test PyPI is a completely separate system from production PyPI, so you will need to set up a separate account on it. Additionally, the Test PyPI server is occasionally reset, so you may need to re-create your test account even if you already have one.
+
+When you are happy that everything is OK, you can then upload your project to PyPI proper with the command:
 ``` bash
 twine upload dist/*
 ```
