@@ -313,7 +313,7 @@
         
 <section id="aio-10-introduction"><p>Content from <a href="10-introduction.html">Python Packaging</a></p>
 <hr>
-<p>Last updated on 2026-08-25 |
+<p>Last updated on 2026-08-26 |
 
         <a href="https://github.com/Southampton-RSG-Training/byte-sized-rse-python-packaging/edit/main/episodes/10-introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -404,7 +404,7 @@ add to the system.</p>
   The History of Packaging on Python
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>Originally Python had no packaging system: you simply downloaded and
 copied Python files into somewhere that Python would find them (usually
@@ -590,7 +590,7 @@ good idea to put quotes around them, eg.:</p>
   Supply-Chain Attacks
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>When you are using other people’s code, you are implicitly
 <em>trusting</em> other people’s code. This trust is something which can
@@ -691,7 +691,7 @@ linters.</p>
   TOML
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>TOML, or “Tom’s Markup Language”, is a human-readable data format
 along the lines of XML, JSON, YAML and similar, but designed to be
@@ -948,8 +948,8 @@ project provides a CI tool (available for GitHub and GitLab in
 particular) which will automatically set up virtual machines and run
 <code>build</code> on a wide variety of platforms. Take care when doing
 this with private repositories: the build process is time-consuming and
-may eat your free CI time, particularly if you enable some of the more
-exotic platforms.</p>
+may eat your CI time, particularly if you enable some of the more exotic
+platforms which need to be emulated.</p>
 </div>
 </div>
 <div class="section level2">
@@ -984,8 +984,12 @@ everything looks correct:</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="ex">twine</span> upload <span class="at">-r</span> testpypi dist/<span class="pp">*</span></span></code></pre>
 </div>
-<p>When you are happy that everything is OK, you can then upload
-with:</p>
+<p>Test PyPI is a completely separate system from production PyPI, so
+you will need to set up a separate account on it. Additionally, the Test
+PyPI server is occasionally reset, so you may need to re-create your
+test account even if you already have one.</p>
+<p>When you are happy that everything is OK, you can then upload your
+project to PyPI proper with the command:</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1083,7 +1087,7 @@ on macOS or Windows.</p>
   Python on Mobile Platforms
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>As of Python 3.14, Python officially supports Android and iOS.
 However neither Android or iOS have a console or terminal, so you can’t
@@ -1345,7 +1349,7 @@ command like:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The <code>[project]</code> section of the <code>pyproject.toml</code>
 should now look like this:</p>
@@ -1429,7 +1433,7 @@ about the names “gui” and “cli”; you can use any name you like.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>The <code>[project]</code> and
 <code>[project.optional-dependencies]</code> should look something like
@@ -1498,7 +1502,7 @@ group called <code>dev</code> that includes <code>black</code>,
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>Your new section should look something like:</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -1609,7 +1613,7 @@ to simply <code>pip install -e .</code>, and the line
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <p>The updated action looks like this:</p>
 <div class="codewrapper sourceCode" id="cb20">
@@ -1716,7 +1720,7 @@ function in that module.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
   <h4 class="accordion-header" id="headingSolution5"> Show me the solution </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <p>Your <code>project.gui-scripts</code> section should now look like
 this:</p>
@@ -1735,7 +1739,7 @@ this:</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> “Flat” vs. “src” Project Layout </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>The code in the example is currently in what is sometimes called
 “flat layout”: the Python packages defined in the project
@@ -1914,7 +1918,7 @@ been installed as part of the <code>dev</code> dependency group.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
   <h4 class="accordion-header" id="headingSolution6"> Show me the solution </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <p>Something like the following should build both “wheel” and “sdist”
 distributions:</p>
@@ -2037,7 +2041,7 @@ a briefcase application.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution7" aria-expanded="false" aria-controls="collapseSolution7">
   <h4 class="accordion-header" id="headingSolution7"> Show me the solution </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
 <div class="accordion-body">
 <p>You can test the app in “development” mode using the command:</p>
 <div class="codewrapper sourceCode" id="cb32">
@@ -2210,8 +2214,8 @@ any links that you are not going to use.
   "url": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/aio.html",
   "identifier": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/aio.html",
   "dateCreated": "2026-08-14",
-  "dateModified": "2026-08-25",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-26",
+  "datePublished": "2026-08-26"
 }
 
   </script><script>
