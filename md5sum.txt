@@ -8,5 +8,5 @@
 "episodes/11-writing-pyproject-toml.md" "a4898ee3f3b0753feb9a820124b1d465" "site/built/11-writing-pyproject-toml.md" "2026-08-25"
 "instructors/instructor-notes.md" "cae72b6712578d74a49fea7513099f8c" "site/built/instructor-notes.md" "2023-03-16"
 "learners/reference.md" "1c7cc4e229304d9806a13f69ca1b8ba4" "site/built/reference.md" "2023-03-16"
-"learners/setup.md" "a522a42b0495c7ca555aec2837269497" "site/built/setup.md" "2026-08-26"
+"learners/setup.md" "a7b131c62569a95796c47135e75bf0f3" "site/built/setup.md" "2026-09-08"
 "profiles/learner-profiles.md" "60b93493cf1da06dfd63255d73854461" "site/built/learner-profiles.md" "2022-04-22"

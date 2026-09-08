@@ -407,7 +407,7 @@ add to the system.</p>
   The History of Packaging on Python
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Originally Python had no packaging system: you simply downloaded and
 copied Python files into somewhere that Python would find them (usually
@@ -593,7 +593,7 @@ good idea to put quotes around them, eg.:</p>
   Supply-Chain Attacks
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>When you are using other people’s code, you are implicitly
 <em>trusting</em> other people’s code. This trust is something which can
@@ -694,7 +694,7 @@ linters.</p>
   TOML
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>TOML, or “Tom’s Markup Language”, is a human-readable data format
 along the lines of XML, JSON, YAML and similar, but designed to be
@@ -1090,7 +1090,7 @@ on macOS or Windows.</p>
   Python on Mobile Platforms
   </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>As of Python 3.14, Python officially supports Android and iOS.
 However neither Android or iOS have a console or terminal, so you can’t
@@ -1198,11 +1198,11 @@ files,</li>
 <li>a GUI app that lets you perform inference on image files (and on
 some platforms, images from a web cam).</li>
 </ul>
-<div id="setup" class="callout discussion">
+<div id="setup" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div id="setup" class="callout-inner">
 <h3 class="callout-title">Setup</h3>
 <div class="callout-content">
@@ -1262,11 +1262,11 @@ probability of each label.</p>
 </h2>
 <p>The first step in packaging your project is to create a
 <code>pyproject.toml</code> file.</p>
-<div id="create-a-minimal-pyproject.toml-file" class="callout discussion">
+<div id="create-a-minimal-pyproject.toml-file" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div id="create-a-minimal-pyproject.toml-file" class="callout-inner">
 <h3 class="callout-title">Create a minimal <code>pyproject.toml</code>
 file</h3>
@@ -1293,11 +1293,11 @@ tests) and we want to also use <code>setuptools-scm</code> to make sure
 that all files under version control are included in the distribution
 (there are ways to include and exclude extra files if needed, but we
 don’t need to).</p>
-<div id="add-build-system-dependencies" class="callout discussion">
+<div id="add-build-system-dependencies" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div id="add-build-system-dependencies" class="callout-inner">
 <h3 class="callout-title">Add build-system dependencies</h3>
 <div class="callout-content">
@@ -1481,7 +1481,7 @@ dependency section (frequently called “dev”) with these
 dependencies.</p>
 <p>These tools don’t need to have the project code installed to work,
 and so in these cases you can instead use “dependency groups”.</p>
-<div id="challenge3" class="callout challenge">
+<div id="challenge6" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
@@ -1535,11 +1535,11 @@ tools often have a configuration file format that they can use to store
 these commonly-used configuration options. However most of them also
 support getting their configuration from the <code>tool</code> section
 of a <code>pyproject.toml</code> file.</p>
-<div id="converting-isort-configuration" class="callout discussion">
+<div id="converting-isort-configuration" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div id="converting-isort-configuration" class="callout-inner">
 <h3 class="callout-title">Converting <code>isort</code>
 configuration</h3>
@@ -1593,7 +1593,7 @@ updated dependencies automatically.</p>
 <p>Having a <code>pyproject.toml</code> simplifies installation of the
 package for developers and users; but also simplifies your continuous
 integration.</p>
-<div id="challenge4" class="callout challenge">
+<div id="challenge8" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
@@ -1956,11 +1956,11 @@ be able to give collaborators a simple installer or executable which
 allows them to run your scripts. There are a number of tools available
 that can do this. We’ll use the <code>briefcase</code> tool, because it
 has the best integration with OS code signing and app stores.</p>
-<div id="add-briefcase-configuration" class="callout discussion">
+<div id="add-briefcase-configuration" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div id="add-briefcase-configuration" class="callout-inner">
 <h3 class="callout-title">Add Briefcase Configuration</h3>
 <div class="callout-content">
@@ -2195,7 +2195,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -2218,8 +2218,8 @@ any links that you are not going to use.
   "url": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/aio.html",
   "identifier": "https://Southampton-RSG-Training.github.io/byte-sized-rse-python-packaging/instructor/aio.html",
   "dateCreated": "2026-08-14",
-  "dateModified": "2026-08-26",
-  "datePublished": "2026-08-26"
+  "dateModified": "2026-09-08",
+  "datePublished": "2026-09-08"
 }
 
   </script><script>
