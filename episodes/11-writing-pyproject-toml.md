@@ -552,7 +552,7 @@ pip install briefcase
 ```
 You could add this to the `dev` dependency group in your `pyproject.toml` as well.
 
-Try either converting the project using `briefcase convert`, or manually add information about your application to the `pyproject.toml`:
+Manually add information about your application to the `pyproject.toml`:
 ``` toml
 [tool.briefcase]
 project_name = "Image Classifiers"
