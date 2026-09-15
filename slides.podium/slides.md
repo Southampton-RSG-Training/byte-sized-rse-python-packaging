@@ -1,0 +1,239 @@
+class: title
+
+# Byte-sized RSE: Packaging Python Projects
+## Corran Webster
+### Southampton Research Software Group
+
+---
+class: title
+
+# Overview
+
+**Introduction:** Packaging Python Code
+
+**Practical activity:** Packaging a Python project
+
+## You should have done setup!
+
+---
+class: title reverse
+
+# Python Packaging
+# Introduction
+
+---
+
+# The Problem of Code Dependencies
+
+- Packaging code is an issue no matter what language you use.
+- Any useful code is going to depend on other code:
+  - OS system functions
+  - language standard libraries
+  - third party libraries
+- This is fine when working on your own computer, but how do you manage this when you want to collaborate?
+- This is a **hard** problem: the Python community has been working on this for 30+ years!
+
+---
+
+# Solution 1: Include everything in the build
+
+- bundle up everything you need (sometimes up to and including the hardware!)
+- give the bundle to the collaborator to use
+- particularly appropriate for *applications*
+- easy for end user, but less flexible
+- Eg. Docker/containers, Flatpak, static builds, MSI installers
+
+You need to **specify dependencies** for the build system.
+
+---
+
+# Solution 2: Install dependencies along with the code
+
+- list all your code's dependencies
+- install with a tool that understands and can install everything
+- particularly appropriate for *libraries*
+- user needs to install packaging system, more flexible
+- Eg. APT/YUM, Homebrew, Nuget, NPM, Pip
+
+You need to **specify dependencies** for the installer system.
+
+---
+
+# Example: Packaging Python Scripts
+
+**Problem:**
+
+- You've written a Python script that performs an analysis and you want to share it with a colleague.
+
+- How do you specify which packages and which *versions* of those packages your script needs?
+
+- Until recently, you might list the dependencies in a `requirements.txt` file, but that has downsides.
+
+???
+
+Downsides of requirements.txt include:
+
+no standard name;
+
+ad-hoc specification;
+
+isn't in the same file as the code it applies to;
+
+may need multiple requirements files for different scripts/libraries/use-cases in a project.
+
+---
+
+# Example: Packaging Python Scripts (cont.)
+
+.left-column[
+
+Recently Python introduced the concept of ["Inline Script Metadata"](https://packaging.python.org/en/latest/specifications/inline-script-metadata).
+
+- Add a comment at the top of the file of the shown structure.
+
+- Use `pip install --requirements-from-script scriptname.py` and to install dependencies.
+
+]
+.right-column[
+
+``` python
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "torch>2.11",
+#   "pillow",
+# ]
+# ///
+```
+
+This is great for making your research code replicable.
+
+]
+
+---
+
+# Specifying Python Dependencies
+
+- Easiest is by the name of the *distribution* on the [Python Package Index](pypi.org) (Eg. `numpy`, `torch`, `pillow`).  Note that the distribution name may differ from the imported *package* name (Eg. `pillow` vs. `PIL`)
+- You can constrain versions with standard comparison operators (`<`, `>`, `<=`, `==`, `!=`, etc.). Eg. `torch >= 2.10,<2.15,!=2.11.4`
+- You can also constrain by platforms or versions of Python.
+- [Python Packaging User Guide](https://packaging.python.org/en/latest/specifications/dependency-specifiers/#defined-environment-marker-fields) has all the details
+
+---
+
+# Dependencies on the Command Line
+
+- Bash and other shells treat `<` and `>` as special characters in a command
+- To specify a versioned dependency when using `pip` on the command-line, use quotes around the dependency.
+  - Eg. `pip install "torch >= 2.11"`
+
+---
+
+# Packaging Python Libraries
+
+.left-column[
+
+- Modern Python projects use a `pyproject.toml` file to specify dependencies, build configuration, project data for PyPI, tool configuration, and other metadata.
+
+- You use `pip install -e .` to install your library in "editable" mode.
+]
+.right-column[
+
+- A minimal `pyproject.toml`:
+
+```toml
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "packaging-example"
+version = "0.0.1"
+dependencies = [
+    "torch>2.11",
+    "pillow",
+]
+```
+]
+---
+
+# Building Distributions
+
+- Python projects are distributed as source distributions ("sdists") and binary "wheels".
+- The `build` tool can be used to build for your *current* platform. Artifacts are stored in the `dist` subdirectory.
+  ``` bash
+  pip install build
+  python -m build
+  ```
+- The resulting wheel or sdist can be installed with `pip`.
+- For projects with C extensions, [`cibuildwheel`](https://cibuildwheel.pypa.io/en/stable/) allows you to use Github Actions to build on many different platforms automatically
+
+???
+
+The name "wheel" comes from a "wheel" of cheese. The original project name of PyPI was the "cheese shop" after a Monty Python sketch.
+
+---
+
+# Publishing Distributions to PyPI
+
+- For open-source code, you can use `twine` to upload distributions to PyPI.
+- You will need an account on PyPI and a token generated by the account.
+
+``` bash
+pip install twine                 # install twine
+twine check                       # check for problems
+twine upload -r testpypi dist/*   # test upload (needs TestPyPI account)
+twine upload dist/*               # publish to PyPI
+```
+
+???
+
+- To test with TestPyPI you need a separate account on TestPyPI
+- TestPyPI gets reset periodically.
+
+---
+
+# Packaging Applications
+
+- [Briefcase](https://briefcase.beeware.org) packages Python apps for app stores and code signing systems.
+- Briefcase is configured in the `pyproject.toml`.  The `briefcase new` and `briefcase convert` commands will help configure a `pyproject.toml`.
+
+``` bash
+pip install briefcase   # install briefcase
+briefcase dev           # run app in developer mode
+briefcase build         # build the app
+briefcase run           # run the built app
+briefcase update        # update dependencies of the app
+briefcase package       # build an installable app
+briefcase publish       # publish to an app store (needs an account)
+```
+
+???
+
+Pip and PyPI are oriented at libraries and developers; Briefcase is oriented at apps and end-users. Works for command-line, desktop, mobile and webassembly.
+
+Complements Beeware Toga GUI system; but also works with PyGame and PySide.
+
+Execute `briefcase new` to create a basic `pyproject.toml` for a new project.
+
+Packaging will ask for signing credentials for app stores, but you can self-sign. Self-signed apps will run on your system, but other users will have to manually OK it.
+
+---
+class: title reverse
+
+# Python Packaging
+# Practical Activity
+
+---
+
+# Activity Introduction
+
+- We'll package an example project.
+- We'll demonstrate this via live coding.
+  - We'll use a repository with example code.
+
+---
+class: title reverse
+
+# Thank you!
+# What questions do you have?

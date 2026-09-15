@@ -68,7 +68,7 @@ If you add a specially formatted comment like the following:
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#   "pytorch>2.11",
+#   "torch>2.11",
 #   "pillow",
 # ]
 # ///
@@ -93,11 +93,11 @@ The exception to this is when publishing code in support of research—when you 
 
 ## Specifying Dependencies
 
-The simplest way to specify a dependency is just by its name: `"numpy"` or `"pytorch"`.  This name is the name of the *distribution* and not the name of the *package* it installs (for example, `pytorch` installs the `torch` package).  This is because a single distribution can install multiple packages. To find the correct distribution name, search on the [Python Package Index](pypi.org).
+The simplest way to specify a dependency is just by its name: `"numpy"` or `"torch"`.  This name is the name of the *distribution* and not the name of the *package* it installs (for example, `pillow` installs the `PIL` package).  This is because a single distribution can install multiple packages. To find the correct distribution name, search on the [Python Package Index](pypi.org).
 
 Installers, like `pip` or `uv` will use this information to find a compatible set of dependency versions and install them. While this is very flexible, it runs the risk of installing an older or newer version of your dependency that isn't compatible with your code. To get around this, you can add additional data that indicates which versions of your dependencies your code is compatible with.
 
-You can use standard comparison operators (`<=`, `>=`, `==`, `!=` and so on) to specify ranges of versions of your dependencies, speparated by commas, so `pytorch >= 2.10,<2.15,!=2.11.4` means any version of pytorch from 2.10.0 up to, but not including 2.15.0, but also excluding the exact version 2.11.4. You can also use wildcards in your expression, such as `pytorch==2.12.*` which means any version of PyTorch 2.12. The operator `~=` means any version compatible with the specified version, so for example `pytorch ~= 2.11` means any version from 2.11.0 up to, but not including, 3.0 (if/when it comes out).
+You can use standard comparison operators (`<=`, `>=`, `==`, `!=` and so on) to specify ranges of versions of your dependencies, speparated by commas, so `torch >= 2.10,<2.15,!=2.11.4` means any version of torch from 2.10.0 up to, but not including 2.15.0, but also excluding the exact version 2.11.4. You can also use wildcards in your expression, such as `torch==2.12.*` which means any version of PyTorch 2.12. The operator `~=` means any version compatible with the specified version, so for example `torch ~= 2.11` means any version from 2.11.0 up to, but not including, 3.0 (if/when it comes out).
 
 Sometimes you may need to specify a dependency which is only needed for a particular platform or python version. In this case you can follow the version information with additional filters after a semicolon such as `typing-extensions>=4.13; python_version < 3.14` - this will install `typing-extensions` only if your package is installed on Python 3.13 or earlier.  You can use `sys_platform` to detect windows vs. linux vs. mmacOS, and there are similar identifiers to detect things like machine architectures (eg. ARM vs. Intel).  The full set of options can be found in the [Python Packaging User Guide](https://packaging.python.org/en/latest/specifications/dependency-specifiers/#defined-environment-marker-fields)
 
@@ -109,7 +109,7 @@ Finally, if absolutely necessary, you can specify a URL which contains the distr
 
 You can use comparison operators when installing packages from the command-line using tools like `pip` or `uv`, but you need to take care because `>` and `<` have special meanings to bash and other similar command shells. If you need to specify version ranges on the command line, it's generally a good idea to put quotes around them, eg.:
 ``` bash
-pip install "pytorch >= 2.11"
+pip install "torch >= 2.11"
 ```
 
 :::
